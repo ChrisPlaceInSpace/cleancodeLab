@@ -2,50 +2,13 @@
 
 public class Game
 {
-    public Game()
+    private IUI _ui;
+    public Game(IUI ui)
     {
-            
+        _ui = ui;
     }
-    public void RunGame()
-    {
-        bool activeGame = true;         //Changed name
-        Console.WriteLine("Enter your user name:\n");
-        string name = Console.ReadLine();
-
-        while (activeGame)
-        {
-            string goal = TargetDigits();
-
-
-            Console.WriteLine("New game:\n");
-            //comment out or remove next line to play real games!
-            //Console.WriteLine("For practice, number is: " + goal + "\n");
-            string guess = Console.ReadLine();
-
-            int numberOfGuesses = 1;
-            string bbcc = CheckBullAndCow(goal, guess);
-            Console.WriteLine(bbcc + "\n");
-            while (bbcc != "BBBB,")
-            {
-                numberOfGuesses++;
-                guess = Console.ReadLine();
-                Console.WriteLine(guess + "\n");
-                bbcc = CheckBullAndCow(goal, guess);
-                Console.WriteLine(bbcc + "\n");
-            }
-            StreamWriter output = new StreamWriter("result.txt", append: true);
-            output.WriteLine(name + "#&#" + numberOfGuesses);
-            output.Close();
-            HighscoreBoard();
-            Console.WriteLine("Correct, it took " + numberOfGuesses + " guesses\nContinue?");
-            string answer = Console.ReadLine();
-            if (answer != null && answer != "" && answer.Substring(0, 1) == "n")        //Förenkla till =="n"
-            {
-                activeGame = false;
-            }
-        }
-    }
-        public static string TargetDigits()        //Changed name
+    
+    public string TargetDigits()        //Changed name
     {
         Random randomGenerator = new Random();
         string goal = "";
@@ -53,17 +16,13 @@ public class Game
         {
             int random = randomGenerator.Next(10);
             string randomDigit = "" + random;
-            //while (goal.Contains(randomDigit))		//Removed While loop
-            //{
-            //	random = randomGenerator.Next(10);
-            //	randomDigit = "" + random;
-            //}
+            
             goal += randomDigit;
         }
         return goal;
     }
 
-    public static string CheckBullAndCow(string goal, string guess)
+    public string CheckBullAndCow(string goal, string guess)
     {
         int cows = 0, bulls = 0;
         guess += "    ";     // if player entered less than 4 chars
@@ -88,10 +47,10 @@ public class Game
     }
 
 
-    public static void HighscoreBoard()        //Switched to PascalCasing and better name excluding "List".
+    public void HighscoreBoard()        
     {
         StreamReader input = new StreamReader("result.txt");
-        List<Player> gameResult = new List<Player>();   //Ändra Result till playerScoreboard/gameResult
+        List<Player> scoreBoard = new List<Player>();   //Ändra Result till playerScoreboard/gameResult
         string line;
         while ((line = input.ReadLine()) != null)
         {
@@ -99,24 +58,26 @@ public class Game
             string name = nameAndScore[0];
             int guesses = Convert.ToInt32(nameAndScore[1]);
             Player pd = new Player(name, guesses);      //pd ändras till playerInfo
-            int pos = gameResult.IndexOf(pd);       //pos = position? Möjlig ändring
+            int pos = scoreBoard.IndexOf(pd);       //pos = position? Möjlig ändring
             if (pos < 0)
             {
-                gameResult.Add(pd);
+                scoreBoard.Add(pd);
             }
             else
             {
-                gameResult[pos].Update(guesses);
+                scoreBoard[pos].Update(guesses);
             }
+            
 
 
         }
-        gameResult.Sort((p1, p2) => p1.Average().CompareTo(p2.Average()));
-        Console.WriteLine("Player   games average");
-        foreach (Player p in gameResult)
+        scoreBoard.Sort((p1, p2) => p1.Average().CompareTo(p2.Average()));
+        _ui.Output("Player   games average");
+        foreach (Player p in scoreBoard)
         {
-            Console.WriteLine(string.Format("{0,-9}{1,5:D}{2,9:F2}", p.Name, p.GamesPlayed, p.Average()));
+            _ui.Output(string.Format("{0,-9}{1,5:D}{2,9:F2}", p.Name, p.GamesPlayed, p.Average()));
         }
         input.Close();
     }
+
 }
