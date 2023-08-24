@@ -78,17 +78,16 @@ public class Game
             {
                 scoreBoard[position].Update(guesses);
             }
-
-
-
         }
+        input.Close();
+
         scoreBoard.Sort((p1, p2) => p1.Average().CompareTo(p2.Average()));
         _ui.Output("Player   games average");
         foreach (Player player in scoreBoard)
         {
             _ui.Output(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.Name, player.GamesPlayed, player.Average()));
         }
-        input.Close();
+        
     }
 
 }
