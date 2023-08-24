@@ -1,12 +1,14 @@
-﻿namespace LabbCC;
+﻿using System.Runtime.InteropServices;
+
+namespace LabbCC;
 
 public class GameController
 {
     private IUI ui;
-    private Game game;
-    public GameController(Game _game, IUI iui)
+    private Game _game;
+    public GameController(Game game, IUI iui)
     {
-        game = _game;
+        _game = game;
         ui = iui;
     }
     public void RunGame()
@@ -14,52 +16,40 @@ public class GameController
         bool gameOn = true;
         ui.Output("Enter your user name:\n");
         string userName = ui.Input();
-
-
         while (gameOn)
         {
             //Val av spel?
-            PlayGame();         //If sats eller liknande för val?
-            game.HighscoreBoard();
-            Continue();
-
+            PlayGame(userName);         //If sats eller liknande för val?
+            _game.UpdateScoreBoard();
+            _game.PrintScoreBoard();
+            Continue(gameOn);
         }
-
-        void PlayGame()     //Göra denna mer generisk för fler spel?
-        {
-            string goal = game.TargetDigits();
-            ui.Output("New game:\n");
-            //comment out or remove next line to play real games!
-            ui.Output("For practice, number is: " + goal + "\n");
-            int numberOfGuesses = 0;
-            string result;
-            do
-            {
-                string guess = ui.Input();
-                numberOfGuesses++;
-                result = game.CheckBullAndCow(goal, guess);
-                ui.Output(result + "\n");
-            } while (result != "BBBB,");
-
-            StreamWriter output = new StreamWriter("result.txt", append: true);
-            {
-                output.WriteLine(userName + "#&#" + numberOfGuesses);
-                output.Close();
-            }
-                      
-            ui.Output("Correct, it took " + numberOfGuesses + " guesses\n");
-
-        }
-
-        void Continue()
-        {
-            ui.Output("\nContinue? \nYes(y) / No(n)");
-            string answer = ui.Input();
-            gameOn = (answer != "" && answer.ToLower() != "n");
-        }
-
-
-
     }
+    public void PlayGame(string userName)     //Göra denna mer generisk för fler spel?
+    {
+        string goal = _game.TargetDigits();
+        ui.Output("New game:\n");
+        //comment out or remove next line to play real games!
+        ui.Output("For practice, number is: " + goal + "\n");
+        int numberOfGuesses = 0;
+        string result;
+        do
+        {
+            string guess = ui.Input();
+            numberOfGuesses++;
+            result = _game.CheckBullAndCow(goal, guess);
+            ui.Output(result + "\n");
+        } while (!result.StartsWith("BBBB,"));
+        _game.WriteToFile(userName, numberOfGuesses);
+        ui.Output($"Correct, it took {numberOfGuesses} guesses\n");
+    }
+    public bool Continue(bool gameOn)
+    {
+        ui.Output("\nContinue? \nYes(y) / No(n)");
+        string answer = ui.Input();
+        gameOn = (answer != "" && answer.ToLower() != "n");
+        return gameOn;
+    }
+    
 
 }
