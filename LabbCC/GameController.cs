@@ -18,14 +18,14 @@ public class GameController
 
         while (gameOn)
         {
-            PlayGame();
-            ui.Output("Continue? \nYes(y) / No(n)");
-            string answer = ui.Input();
-            gameOn = (answer != "" && answer.ToLower() != "n");
+            //Val av spel?
+            PlayGame();         //If sats eller liknande för val?
+            game.HighscoreBoard();
+            Continue();
 
         }
 
-        void PlayGame()
+        void PlayGame()     //Göra denna mer generisk för fler spel?
         {
             string goal = game.TargetDigits();
             ui.Output("New game:\n");
@@ -46,16 +46,17 @@ public class GameController
                 output.WriteLine(userName + "#&#" + numberOfGuesses);
                 output.Close();
             }
-
-            game.HighscoreBoard();
-
-            ui.Output("Correct, it took " + numberOfGuesses + " guesses");
+                      
+            ui.Output("Correct, it took " + numberOfGuesses + " guesses\n");
 
         }
 
-
-
-
+        void Continue()
+        {
+            ui.Output("\nContinue? \nYes(y) / No(n)");
+            string answer = ui.Input();
+            gameOn = (answer != "" && answer.ToLower() != "n");
+        }
 
 
 

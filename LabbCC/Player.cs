@@ -32,7 +32,7 @@ public class Player
     }
 
 
-    public override int GetHashCode()
+    public override int GetHashCode()   //Fråga Benjamin om funktion.
     {
         return Name.GetHashCode();
     }

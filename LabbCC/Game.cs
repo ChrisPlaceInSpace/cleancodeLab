@@ -8,7 +8,7 @@ public class Game
         _ui = ui;
     }
 
-    public string TargetDigits()        //Changed name
+    public string TargetDigits()  
     {
         Random randomGenerator = new Random();
         string goal = "";
@@ -24,51 +24,57 @@ public class Game
 
     public string CheckBullAndCow(string goal, string guess)
     {
-        int cows = 0, bulls = 0;
-        string result;
-        guess += "    ";     // if player entered less than 4 chars
+        
+        int bulls = CheckBull(goal, guess);
+        int cows = CheckCow(goal, guess);        
+                
+        string result = new string('B', bulls) + "," + new string('C', cows);
+                
+        return result;
+
+    }
+    public int CheckBull(string goal, string guess)
+    {
+        int bull = 0;
+        guess += "    ";
+        for (int i = 0; i < 4; i++)
+        {
+            if (goal[i] == guess[i])
+            {
+                bull++;
+            }
+        }
+        return bull;
+    }
+    public int CheckCow(string goal, string guess)
+    {
+        int cow = 0;
+        guess += "    ";
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
             {
-                if (goal[i] == guess[j])
+                if (goal[i] == guess[j] && i != j)
                 {
-                    if (i == j)
-                    {
-                        bulls++;
-                    }
-                    else
-                    {
-                        cows++;
-                    }
+                    cow++;
                 }
+
             }
         }
-        result = new string('B', bulls) + "," + new string('C', cows);
-        
-        //if (bulls == 4)
-        //{
-        //    result = "BBBB".Substring(0, bulls) + ",";
-        //}
-        //else
-        //{
-        //    result ="BBBB".Substring(0, bulls) + "," + "CCCC".Substring(0, cows);
-        //}
-        return result;
+        return cow;
     }
 
-
     public void HighscoreBoard()
-    {
-        StreamReader input = new StreamReader("result.txt");
+    {        
+        StreamReader streamReader = new StreamReader("result.txt");     //Fråga Benjamin om FileHandler?
         List<Player> scoreBoard = new List<Player>();
-        string line;
-        while ((line = input.ReadLine()) != null)
+        string line = streamReader.ReadLine();
+        while (line != null)
         {
             string[] nameAndScore = line.Split(new string[] { "#&#" }, StringSplitOptions.None);
-            string name = nameAndScore[0];
-            int guesses = Convert.ToInt32(nameAndScore[1]);
-            Player playerData = new Player(name, guesses);
+            //string name = nameAndScore[0];
+            //int guesses = Convert.ToInt32(nameAndScore[1]);
+            Player playerData = new Player(nameAndScore[0], Convert.ToInt32(nameAndScore[1]));
             int position = scoreBoard.IndexOf(playerData);
             if (position < 0)
             {
@@ -76,19 +82,18 @@ public class Game
             }
             else
             {
-                scoreBoard[position].Update(guesses);
+                scoreBoard[position].Update(Convert.ToInt32(nameAndScore[1]));
             }
 
-
-
         }
+        streamReader.Close();
+
         scoreBoard.Sort((p1, p2) => p1.Average().CompareTo(p2.Average()));
         _ui.Output("Player   games average");
         foreach (Player player in scoreBoard)
         {
             _ui.Output(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.Name, player.GamesPlayed, player.Average()));
         }
-        input.Close();
     }
 
 }
