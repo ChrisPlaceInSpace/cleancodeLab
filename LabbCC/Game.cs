@@ -44,14 +44,16 @@ public class Game
                 }
             }
         }
-        if (bulls == 4)
-        {
-            result = "BBBB".Substring(0, bulls) + ",";
-        }
-        else
-        {
-            result ="BBBB".Substring(0, bulls) + "," + "CCCC".Substring(0, cows);
-        }
+        result = new string('B', bulls) + "," + new string('C', cows);
+        
+        //if (bulls == 4)
+        //{
+        //    result = "BBBB".Substring(0, bulls) + ",";
+        //}
+        //else
+        //{
+        //    result ="BBBB".Substring(0, bulls) + "," + "CCCC".Substring(0, cows);
+        //}
         return result;
     }
 

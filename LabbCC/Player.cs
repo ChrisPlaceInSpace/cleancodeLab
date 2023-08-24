@@ -25,14 +25,15 @@ public class Player
     }
 
 
-    //public override bool Equals(Object p)
-    //{
-    //    return Name.Equals(((Player)p).Name);
-    //}
-    
+    public override bool Equals(Object obj)
+    {
+        Player other = (Player)obj;
+        return Name.Equals(other.Name);
+    }
 
-    //public override int GetHashCode()
-    //{
-    //    return Name.GetHashCode();
-    //}
+
+    public override int GetHashCode()
+    {
+        return Name.GetHashCode();
+    }
 }
