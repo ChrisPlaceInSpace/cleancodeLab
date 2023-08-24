@@ -13,7 +13,7 @@ public class Player
         numberOfGuesses = guess;
     }
 
-    public void Update(int guess)
+    public void UpdatePosition(int guess)
     {
         numberOfGuesses += guess;
         GamesPlayed++;
@@ -25,7 +25,7 @@ public class Player
     }
 
 
-    public override bool Equals(Object obj)
+    public override bool Equals(Object obj) //Fråga Benji
     {
         Player other = (Player)obj;
         return Name.Equals(other.Name);

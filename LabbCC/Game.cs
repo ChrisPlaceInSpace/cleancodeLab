@@ -7,6 +7,7 @@ public class Game
     {
         _ui = ui;
     }
+    List<Player> scoreBoard = new List<Player>();
 
     public string TargetDigits()  
     {
@@ -25,15 +26,15 @@ public class Game
     public string CheckBullAndCow(string goal, string guess)
     {
         
-        int bulls = CheckBull(goal, guess);
-        int cows = CheckCow(goal, guess);        
+        int bulls = CountBull(goal, guess);
+        int cows = CountCow(goal, guess);        
                 
         string result = new string('B', bulls) + "," + new string('C', cows);
                 
         return result;
 
     }
-    public int CheckBull(string goal, string guess)
+    public int CountBull(string goal, string guess)
     {
         int bull = 0;
         guess += "    ";
@@ -46,7 +47,7 @@ public class Game
         }
         return bull;
     }
-    public int CheckCow(string goal, string guess)
+    public int CountCow(string goal, string guess)
     {
         int cow = 0;
         guess += "    ";
@@ -64,31 +65,44 @@ public class Game
         return cow;
     }
 
-    public void HighscoreBoard()
+    public void WriteToFile(string userName, int numberOfGuesses)
+    {
+        StreamWriter output = new StreamWriter("result.txt", append: true);
+        {
+            output.WriteLine($"{userName}#&#{numberOfGuesses}");
+            output.Close();
+        }
+    }
+    public void UpdateScoreBoard()
     {        
         StreamReader streamReader = new StreamReader("result.txt");     //Fråga Benjamin om FileHandler?
-        List<Player> scoreBoard = new List<Player>();
-        string line = streamReader.ReadLine();
-        while (line != null)
+        string line;
+        while ((line = streamReader.ReadLine()) != null)
         {
             string[] nameAndScore = line.Split(new string[] { "#&#" }, StringSplitOptions.None);
-            //string name = nameAndScore[0];
-            //int guesses = Convert.ToInt32(nameAndScore[1]);
-            Player playerData = new Player(nameAndScore[0], Convert.ToInt32(nameAndScore[1]));
+            string name = nameAndScore[0];
+            int score = Convert.ToInt32(nameAndScore[1]);
+            Player playerData = new Player(name, score);
             int position = scoreBoard.IndexOf(playerData);
+            //OM spelaren inte redan finns på poängtavlan så läggs det till en ny,
+            //ANNARS uppdateras det gamla resultatet.
             if (position < 0)
             {
                 scoreBoard.Add(playerData);
             }
             else
             {
-                scoreBoard[position].Update(Convert.ToInt32(nameAndScore[1]));
+                scoreBoard[position].UpdatePosition(score);
             }
-
         }
         streamReader.Close();
 
+        //Sorterar poängtavlan baserat på resultatet av Average
         scoreBoard.Sort((p1, p2) => p1.Average().CompareTo(p2.Average()));
+
+    }
+    public void PrintScoreBoard()
+    {
         _ui.Output("Player   games average");
         foreach (Player player in scoreBoard)
         {
