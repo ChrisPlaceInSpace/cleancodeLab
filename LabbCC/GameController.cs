@@ -2,61 +2,63 @@
 
 public class GameController
 {
-    private IUI _ui;
-    private Game _game;
-    public GameController(Game game, IUI ui)
+    private IUI ui;
+    private Game game;
+    public GameController(Game _game, IUI iui)
     {
-           _game = game;
-           _ui = ui;
+        game = _game;
+        ui = iui;
     }
     public void RunGame()
     {
-        bool gameOn = true;         
-        _ui.Output("Enter your user name:\n");
-        string userName = _ui.Input();
+        bool gameOn = true;
+        ui.Output("Enter your user name:\n");
+        string userName = ui.Input();
 
 
-        while(gameOn)
+        while (gameOn)
         {
             PlayGame();
-            _ui.Output("Continue? \nYes(y) / No(n)");
-            string answer = _ui.Input();
+            ui.Output("Continue? \nYes(y) / No(n)");
+            string answer = ui.Input();
             gameOn = (answer != "" && answer.ToLower() != "n");
-            
+
         }
 
         void PlayGame()
         {
-            string goal = _game.TargetDigits();
-            _ui.Output("New game:\n");
+            string goal = game.TargetDigits();
+            ui.Output("New game:\n");
             //comment out or remove next line to play real games!
-            _ui.Output("For practice, number is: " + goal + "\n");
+            ui.Output("For practice, number is: " + goal + "\n");
             int numberOfGuesses = 0;
             string result;
             do
             {
+                string guess = ui.Input();
                 numberOfGuesses++;
-                string guess = _ui.Input();                
-                result = _game.CheckBullAndCow(goal, guess);
-               _ui.Output(result + "\n");
+                result = game.CheckBullAndCow(goal, guess);
+                ui.Output(result + "\n");
             } while (result != "BBBB,");
 
             StreamWriter output = new StreamWriter("result.txt", append: true);
-            output.WriteLine(userName + ", Score: " + numberOfGuesses);
-            output.Close();
+            {
+                output.WriteLine(userName + "#&#" + numberOfGuesses);
+                output.Close();
+            }
 
-            _game.HighscoreBoard();
+            game.HighscoreBoard();
 
-           _ui.Output("Correct, it took " + numberOfGuesses + " guesses");
-            
+            ui.Output("Correct, it took " + numberOfGuesses + " guesses");
+
         }
 
-                      
-                   
 
 
 
-        
+
+
+
     }
-    
+
 }

@@ -3,36 +3,37 @@
 public class Player
 {
     public string Name { get; private set; }
-    public int GamesPlayed { get; private set; }    //Ändra till GamesPlayed
-    int totalGuess;     //Ändra till numberOfGuesses
+    public int GamesPlayed { get; private set; }
+    int numberOfGuesses;
 
-    public Player(string name, int guesses)
+    public Player(string name, int guess)
     {
-        this.Name = name;
+        Name = name;
         GamesPlayed = 1;
-        totalGuess = guesses;
+        numberOfGuesses = guess;
     }
 
-    public void Update(int guesses)
+    public void Update(int guess)
     {
-        totalGuess += guesses;
+        numberOfGuesses += guess;
         GamesPlayed++;
     }
 
     public double Average()
     {
-        return (double)totalGuess / GamesPlayed;
+        return (double)numberOfGuesses / GamesPlayed;
     }
 
 
-    public override bool Equals(Object p)
+    public override bool Equals(Object obj)
     {
-        return Name.Equals(((Player)p).Name);
+        Player other = (Player)obj;
+        return Name.Equals(other.Name);
     }
-    
 
-    //public override int GetHashCode()
-    //{
-    //    return Name.GetHashCode();
-    //}
+
+    public override int GetHashCode()
+    {
+        return Name.GetHashCode();
+    }
 }
