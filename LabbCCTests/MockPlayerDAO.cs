@@ -10,11 +10,11 @@ public class MockPlayerDAO : IPlayerDAO
     public int NumberOfGuesses { get; set; }
     public double Average()
     {
-        return (double) NumberOfGuesses / GamesPlayed;
+        return (double)NumberOfGuesses / GamesPlayed;
     }
 
     public void UpdatePosition(int guess)
-    {        
+    {
         NumberOfGuesses += guess;
         GamesPlayed++;
     }
