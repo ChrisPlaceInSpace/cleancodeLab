@@ -2,7 +2,7 @@
 
 namespace LabbCC;
 
-public class GameController
+public class GameController : IGameController
 {
     private IUI ui;
     private Game _game;
@@ -19,13 +19,13 @@ public class GameController
         while (gameOn)
         {
             //Val av spel?
-            PlayGame(userName);         //If sats eller liknande för val?
+            Game(userName);         //If sats eller liknande för val?
             _game.UpdateScoreBoard();
             _game.PrintScoreBoard();
             Continue(gameOn);
         }
     }
-    public void PlayGame(string userName)     //Göra denna mer generisk för fler spel?
+    public void Game(string userName)     //Göra denna mer generisk för fler spel?
     {
         string goal = _game.TargetDigits();
         ui.Output("New game:\n");
@@ -50,6 +50,6 @@ public class GameController
         gameOn = (answer != "" && answer.ToLower() != "n");
         return gameOn;
     }
-    
+
 
 }

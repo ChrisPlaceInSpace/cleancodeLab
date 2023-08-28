@@ -1,14 +1,14 @@
 ﻿namespace LabbCC;
 
-public class Player
+public class PlayerDAO : IPlayerDAO
 {
-    public string Name { get; private set; }
+    public string PlayerName { get; private set; }
     public int GamesPlayed { get; private set; }
     int numberOfGuesses;
 
-    public Player(string name, int guess)
+    public PlayerDAO(string name, int guess) 
     {
-        Name = name;
+        PlayerName = name;
         GamesPlayed = 1;
         numberOfGuesses = guess;
     }
@@ -27,13 +27,13 @@ public class Player
 
     public override bool Equals(Object obj) //Fråga Benji
     {
-        Player other = (Player)obj;
-        return Name.Equals(other.Name);
+        PlayerDAO other = (PlayerDAO)obj;
+        return PlayerName.Equals(other.PlayerName);
     }
 
 
     public override int GetHashCode()   //Fråga Benjamin om funktion.
     {
-        return Name.GetHashCode();
+        return PlayerName.GetHashCode();
     }
 }
