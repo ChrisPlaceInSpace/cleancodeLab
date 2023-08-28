@@ -7,7 +7,7 @@ public class Game
     {
         _ui = ui;
     }
-    List<Player> scoreBoard = new List<Player>();
+    List<PlayerDAO> scoreBoard = new List<PlayerDAO>();
 
     public string TargetDigits()  
     {
@@ -82,7 +82,7 @@ public class Game
             string[] nameAndScore = line.Split(new string[] { "#&#" }, StringSplitOptions.None);
             string name = nameAndScore[0];
             int score = Convert.ToInt32(nameAndScore[1]);
-            Player playerData = new Player(name, score);
+            PlayerDAO playerData = new PlayerDAO(name, score);
             int position = scoreBoard.IndexOf(playerData);
             //OM spelaren inte redan finns på poängtavlan så läggs det till en ny,
             //ANNARS uppdateras det gamla resultatet.
@@ -104,9 +104,9 @@ public class Game
     public void PrintScoreBoard()
     {
         _ui.Output("Player   games average");
-        foreach (Player player in scoreBoard)
+        foreach (PlayerDAO player in scoreBoard)
         {
-            _ui.Output(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.Name, player.GamesPlayed, player.Average()));
+            _ui.Output(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.PlayerName, player.GamesPlayed, player.Average()));
         }
     }
 
