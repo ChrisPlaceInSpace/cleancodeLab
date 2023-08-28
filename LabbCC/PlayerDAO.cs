@@ -2,26 +2,27 @@
 
 public class PlayerDAO : IPlayerDAO
 {
-    public string PlayerName { get; private set; }
-    public int GamesPlayed { get; private set; }
-    int numberOfGuesses;
+    public int GamesPlayed { get; set; }
+    public string PlayerName { get; set; }
+    
+    public int NumberOfGuesses { get; set; }
 
     public PlayerDAO(string name, int guess) 
     {
-        PlayerName = name;
         GamesPlayed = 1;
-        numberOfGuesses = guess;
+        PlayerName = name;
+        NumberOfGuesses = guess;
     }
 
     public void UpdatePosition(int guess)
     {
-        numberOfGuesses += guess;
+        NumberOfGuesses += guess;
         GamesPlayed++;
     }
 
     public double Average()
     {
-        return (double)numberOfGuesses / GamesPlayed;
+        return (double)NumberOfGuesses / GamesPlayed;
     }
 
 
