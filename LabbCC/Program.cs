@@ -9,8 +9,7 @@ namespace MooGame
         {
 
             IUI ui = new ConsoleIO();
-            Game game = new Game(ui);
-            GameController gameController = new GameController(game, ui);
+            GameController gameController = new GameController();
             //Debug.Write(game.ToString());
             //Debug.WriteLine("Test");
             gameController.RunGame();
