@@ -5,40 +5,67 @@ namespace LabbCC;
 public class MooGame : IGame
 {
     private IUI ui;
-    public MooGame(IUI _ui)
+    public string GameName { get; set; }
+    public MooGame(IUI _ui, string gameName)
     {
         ui = _ui;
+        GameName = gameName;
     }
     List<PlayerDAO> scoreBoard = new List<PlayerDAO>();
 
-
-    public void Game()     //Göra denna mer generisk för fler spel?
+    bool gameOn;
+    public void RunGame()     //Göra denna mer generisk för fler spel?
     {
+        gameOn = true;
+        ui.Clear();
         ui.Output("Enter your user name:\n");
         string userName = ui.Input();
-        string goal = TargetDigits();
-        ui.Output("New game:\n");
-        //comment out or remove next line to play real games!
-        ui.Output("For practice, number is: " + goal + "\n");
-        int numberOfGuesses = 0;
-        string result;
-        do
+        while (gameOn)
         {
-            string guess = ui.Input();
-            numberOfGuesses++;
-            result = CheckBullAndCow(goal, guess);
-            ui.Output(result + "\n");
-        } while (!result.StartsWith("BBBB,"));
-        WriteToFile(userName, numberOfGuesses);
-        ui.Output($"Correct, it took {numberOfGuesses} guesses\n");
+            ui.Clear();
+            string goal = TargetDigits();
+            ui.Output("New game:\n");
+            //comment out or remove next line to play real games!
+            ui.Output("For practice, number is: " + goal + "\n");
+            int numberOfGuesses = 0;
+            string result;
+            do
+            {
+                string guess = ui.Input();
+                numberOfGuesses++;
+                result = CheckBullAndCow(goal, guess);
+                ui.Output(result + "\n");
+            } while (!result.StartsWith("BBBB,"));
+            WriteToFile(userName, numberOfGuesses);
+            ui.Output($"Correct, it took {numberOfGuesses} guesses\n");
+            UpdateScoreBoard();
+            PrintScoreBoard();
+            Continue();
+        }
     }
 
-    public bool Continue(bool gameOn)
+    public void Continue()
     {
         ui.Output("\nContinue? \nYes(y) / No(n)");
         string answer = ui.Input();
-        gameOn = answer != "" && answer.ToLower() != "n";
-        return gameOn;
+        try
+        {
+            if (answer != "y" || answer != "n")
+            {
+                ui.Output("Please print 'y' to continue or 'n' to quit");
+            }
+            else
+            gameOn = answer != "n".ToLower();
+
+        }
+        catch
+        {
+            ui.Output("Invalid input");
+            throw;
+        }
+        
+        
+        //return gameOn;
     }
 
     public void UpdateScoreBoard()
@@ -81,10 +108,18 @@ public class MooGame : IGame
 
     public void WriteToFile(string userName, int numberOfGuesses)
     {
-        StreamWriter output = new StreamWriter("result.txt", append: true);
+        try
         {
-            output.WriteLine($"{userName}#&#{numberOfGuesses}");
-            output.Close();
+            StreamWriter output = new StreamWriter("result.txt", append: true);
+            {
+                output.WriteLine($"{userName}#&#{numberOfGuesses}");
+                output.Close();
+            }
+        }
+        catch (Exception e)
+        {
+            ui.Output("Could not write to file\n" + e.ToString());
+            throw;
         }
     }
     public string TargetDigits()

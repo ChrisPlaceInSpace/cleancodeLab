@@ -3,8 +3,9 @@
     public interface IGame
     {
         //public List<PlayerDAO> scoreBoard { get; set; }
-        void Game();
-        bool Continue(bool gameOn);
+        string GameName { get; set; }
+        void RunGame();
+        void Continue();
         void UpdateScoreBoard();
         void PrintScoreBoard();
         void WriteToFile(string userName, int numberOfGuesses);
