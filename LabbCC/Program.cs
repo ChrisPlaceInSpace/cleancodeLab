@@ -12,7 +12,7 @@ namespace MooGame
             GameController gameController = new GameController();
             //Debug.Write(game.ToString());
             //Debug.WriteLine("Test");
-            gameController.RunGame();
+            gameController.SelectGame();
             
         }
 
