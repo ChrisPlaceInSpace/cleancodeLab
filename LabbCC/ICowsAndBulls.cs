@@ -2,7 +2,7 @@
 
 public interface ICowsAndBulls
 {
-    public Game CheckCows();
-    public Game CheckBulls();
+    public MooGame CheckCows();
+    public MooGame CheckBulls();
 
 }
