@@ -1,4 +1,5 @@
 ﻿using LabbCC;
+using LabbCC.Interfaces;
 using System.Diagnostics;
 
 namespace MooGame

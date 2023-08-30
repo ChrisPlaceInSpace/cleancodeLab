@@ -1,4 +1,4 @@
-﻿using LabbCC;
+﻿using LabbCC.Interfaces;
 
 namespace LabbCCTests;
 
