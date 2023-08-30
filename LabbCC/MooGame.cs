@@ -13,10 +13,9 @@ public class MooGame : IGame
     }
     List<PlayerDAO> scoreBoard = new List<PlayerDAO>();
 
-    bool gameOn;
     public void RunGame()     //Göra denna mer generisk för fler spel?
     {
-        gameOn = true;
+        bool gameOn = true;
         ui.Clear();
         ui.Output("Enter your user name:\n");
         string userName = ui.Input();
@@ -38,90 +37,51 @@ public class MooGame : IGame
             } while (!result.StartsWith("BBBB,"));
             WriteToFile(userName, numberOfGuesses);
             ui.Output($"Correct, it took {numberOfGuesses} guesses\n");
-            UpdateScoreBoard();
+            UpdateScoreBoard(scoreBoard);
             PrintScoreBoard();
-            Continue();
+            gameOn = Continue();
         }
     }
 
-    public void Continue()
+    public bool Continue()
     {
-        ui.Output("\nContinue? \nYes(y) / No(n)");
-        string answer = ui.Input();
-        try
+        bool runLoop = true;
+        while (runLoop)
         {
-            if (answer != "y" || answer != "n")
+            ui.Output("\nContinue? \nYes(y) / No(n)");
+            string answer = ui.Input();
+            if (answer.ToLower() == "y")
             {
-                ui.Output("Please print 'y' to continue or 'n' to quit");
+                return true;
+            }
+            else if (answer == "n".ToLower())
+            {
+                return false;
             }
             else
-            gameOn = answer != "n".ToLower();
+                ui.Clear();
+                ui.Output("Please enter 'y' to continue or 'n' to quit");
 
         }
-        catch
-        {
-            ui.Output("Invalid input");
-            throw;
-        }
-        
-        
-        //return gameOn;
+        return false;
     }
 
-    public void UpdateScoreBoard()
-    {
-        StreamReader streamReader = new StreamReader("result.txt");     //Fråga Benjamin om FileHandler?
-        string line;
-        while ((line = streamReader.ReadLine()) != null)
-        {
-            string[] nameAndScore = line.Split(new string[] { "#&#" }, StringSplitOptions.None);
-            string name = nameAndScore[0];
-            int score = Convert.ToInt32(nameAndScore[1]);
-            PlayerDAO playerData = new PlayerDAO(name, score);
-            int position = scoreBoard.IndexOf(playerData);
-            //OM spelaren inte redan finns på poängtavlan så läggs det till en ny,
-            //ANNARS uppdateras det gamla resultatet.
-            if (position < 0)
-            {
-                scoreBoard.Add(playerData);
-            }
-            else
-            {
-                scoreBoard[position].UpdatePosition(score);
-            }
-        }
-        streamReader.Close();
-
-        //Sorterar poängtavlan baserat på resultatet av Average
-        scoreBoard.Sort((p1, p2) => p1.Average().CompareTo(p2.Average()));
-
-    }
+    
 
     public void PrintScoreBoard()
     {
+        //Sorterar poängtavlan baserat på resultatet av Average
+        scoreBoard.Sort((p1, p2) => p1.Average().CompareTo(p2.Average()));
+
         ui.Output("Player   games average");
         foreach (PlayerDAO player in scoreBoard)
         {
             ui.Output(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.PlayerName, player.GamesPlayed, player.Average()));
         }
+       
     }
 
-    public void WriteToFile(string userName, int numberOfGuesses)
-    {
-        try
-        {
-            StreamWriter output = new StreamWriter("result.txt", append: true);
-            {
-                output.WriteLine($"{userName}#&#{numberOfGuesses}");
-                output.Close();
-            }
-        }
-        catch (Exception e)
-        {
-            ui.Output("Could not write to file\n" + e.ToString());
-            throw;
-        }
-    }
+    
     public string TargetDigits()
     {
         Random randomGenerator = new Random();

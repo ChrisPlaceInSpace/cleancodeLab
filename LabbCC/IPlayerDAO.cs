@@ -8,7 +8,7 @@
 
         double Average();
         bool Equals(object obj);
-        int GetHashCode();
+        //int GetHashCode();
         void UpdatePosition(int guess);
     }
 }
