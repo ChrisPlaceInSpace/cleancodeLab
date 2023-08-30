@@ -1,8 +1,8 @@
-﻿namespace LabbCC
+﻿namespace LabbCC.Interfaces
 {
     public interface IPlayerDAO
     {
-        int GamesPlayed { get; }
+        public int GamesPlayed { get; set; }
         string PlayerName { get; }
         int NumberOfGuesses { get; }
 

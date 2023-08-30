@@ -1,24 +1,28 @@
-﻿namespace LabbCC;
+﻿using System.IO;
+using LabbCC.Interfaces;
 
-public class Filehandler
+namespace LabbCC;
+
+public class Filehandler : IFilehandler
 {
-    private IUI ui;
-    string separator = "#&#";
-    string file = "result.txt";
+    private IUI ui = new ConsoleIO();
+    public string Separator { get; set; }
+    public string File { get; set; }
 
-
-    public Filehandler(IUI ui)
+    public Filehandler(string file, string separator)
     {
-            this .ui = ui;
+        this.File = file;
+        this.Separator = separator;
     }
+
 
     public void WriteToFile(string userName, int numberOfGuesses)
     {
         try
         {
-            StreamWriter streamWriter = new StreamWriter(file, append: true);
+            StreamWriter streamWriter = new StreamWriter(File, append: true);
             {
-                streamWriter.WriteLine($"{userName}{separator}{numberOfGuesses}");
+                streamWriter.WriteLine($"{userName}{Separator}{numberOfGuesses}");
                 streamWriter.Close();
             }
         }
@@ -28,29 +32,47 @@ public class Filehandler
             throw;
         }
     }
-    public void ReadAndUpdateScoreBoard(List<PlayerDAO> scoreBoard)
+
+    public List<string> Read()
     {
-        StreamReader streamReader = new StreamReader(file);
+        StreamReader streamReader = new StreamReader(File);
         string line;
+        List<string> lines = new List<string>();
+        //För varje rad i filen, lägg till strängen i listan
         while ((line = streamReader.ReadLine()) != null)
         {
-            string[] nameAndScore = line.Split(new string[] { separator }, StringSplitOptions.None);
-            string name = nameAndScore[0];
-            int score = Convert.ToInt32(nameAndScore[1]);
-            PlayerDAO playerData = new PlayerDAO(name, score);
-            int position = scoreBoard.IndexOf(playerData);
-            //OM spelaren inte redan finns på poängtavlan så läggs det till en ny,
-            //ANNARS uppdateras det gamla resultatet.
-            if (position < 0)
-            {
-                scoreBoard.Add(playerData);
-            }
-            else
-            {
-                scoreBoard[position].UpdatePosition(score);
-            }
+            lines.Add(line);
         }
         streamReader.Close();
-                
+        return lines;
     }
+
+    
+
 }
+
+    //public void ReadAndUpdateScoreBoard(List<PlayerDAO> scoreBoard)
+    //{
+    //    StreamReader streamReader = new StreamReader(file);
+    //    string line;
+    //    while ((line = streamReader.ReadLine()) != null)
+    //    {
+    //        string[] nameAndScore = line.Split(new string[] { separator }, StringSplitOptions.None);
+    //        string name = nameAndScore[0];
+    //        int score = Convert.ToInt32(nameAndScore[1]);
+    //        PlayerDAO playerData = new PlayerDAO(name, score);
+    //        int position = scoreBoard.IndexOf(playerData);
+    //        //OM spelaren inte redan finns på poängtavlan så läggs det till en ny,
+    //        //ANNARS uppdateras det gamla resultatet.
+    //        if (position < 0)
+    //        {
+    //            scoreBoard.Add(playerData);
+    //        }
+    //        else
+    //        {
+    //            scoreBoard[position].UpdatePosition(score);
+    //        }
+    //    }
+    //    streamReader.Close();
+
+    //}

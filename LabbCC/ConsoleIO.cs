@@ -1,4 +1,6 @@
-﻿namespace LabbCC;
+﻿using LabbCC.Interfaces;
+
+namespace LabbCC;
 
 internal class ConsoleIO : IUI
 {
