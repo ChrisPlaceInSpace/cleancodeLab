@@ -15,7 +15,6 @@ public class PlayerDAO : IPlayerDAO
         PlayerName = name;
         NumberOfGuesses = guess;
     }
-
     public void UpdatePosition(int guess)
     {
         NumberOfGuesses += guess;
@@ -34,8 +33,7 @@ public class PlayerDAO : IPlayerDAO
         return PlayerName.Equals(other.PlayerName);
     }
 
-
-    public override int GetHashCode()   //Fråga Benjamin om funktion.
+    public override int GetHashCode()
     {
         return PlayerName.GetHashCode();
     }

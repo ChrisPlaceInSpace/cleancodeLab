@@ -1,4 +1,5 @@
 ﻿using LabbCC.Interfaces;
+using System.Text;
 
 namespace LabbCC;
 
@@ -11,7 +12,7 @@ public class ScoreBoardHandler : IScoreBoardHandler
         this.filehandler = filehandler;
     }
 
-    public void Update(List<PlayerDAO> playerStats)
+    public void UpdateScoreBoard(List<PlayerDAO> playerStats)
     {
         List<string> lines = filehandler.Read();
         foreach (string line in lines)
@@ -44,5 +45,18 @@ public class ScoreBoardHandler : IScoreBoardHandler
             ui.Output(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.PlayerName, player.GamesPlayed, player.Average()));
         }
 
+    }   
+        
+    public string Truncate(string incomingString)
+    {
+        int maxLength = 9;
+        if (incomingString.Length > maxLength)
+        {
+            StringBuilder sb = new StringBuilder(incomingString);
+            sb.Length = maxLength;
+            string truncatedString = sb.ToString();
+            return truncatedString;
+        }
+        return incomingString;
     }
 }

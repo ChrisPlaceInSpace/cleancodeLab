@@ -1,19 +1,15 @@
 ﻿using LabbCC.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace LabbCC
+namespace LabbCC.MooGame
 {
-    public class MooGameLogic
+    public class MooGameLogic : IGameLogic
     {
         IUI ui = new ConsoleIO();
 
-        public void Logic(int numberOfGuesses, string result)
+        public int Logic(int numberOfGuesses)
         {
-            string goal = TargetDigits();
+            string result;
+            string goal = GoalGenerator();
             //comment out or remove next line to play real games!
             ui.Output("For practice, number is: " + goal + "\n");
             do
@@ -23,8 +19,9 @@ namespace LabbCC
                 result = CheckBullAndCow(goal, guess);
                 ui.Output(result + "\n");
             } while (!result.StartsWith("BBBB,"));
+            return numberOfGuesses;
         }
-        public string TargetDigits()
+        public string GoalGenerator()
         {
             Random randomGenerator = new Random();
             string goal = "";
@@ -78,5 +75,6 @@ namespace LabbCC
             }
             return cow;
         }
+
     }
 }
