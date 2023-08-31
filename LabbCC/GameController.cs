@@ -13,27 +13,30 @@ public class GameController : IGameController
         bool running = true;
         while (running)
         {
-            ui.Output("Please select game:\n");
-            ui.Output($"1. {games[0].GameName}");
-            ui.Output("0. Exit menu");
-            int.TryParse(ui.Input(), out int selectGame); 
-            switch (selectGame)
+            try
             {
-                case 0:
-                    ui.ExitGame();
-                    break;
-                case 1:
-                    games[0].RunGame();
-                    break;
-                case 2:
-                    //Annat spel
-                    break;
-                default:
-                    ui.Output("Choose a number for an existing game");
-                    break;
-            }
+                ui.Output("Please select game:\n");
+                ui.Output($"1. {games[0].GameName}");
+                ui.Output("0. Exit menu");
+
+                int.TryParse(ui.Input(), out int selectGame);
+                switch (selectGame)
+                {
+                    case 0:
+                        ui.ExitGame();
+                        break;
+                    case 1:
+                        games[0].RunGame();
+                        break;
+                    case 2:
+                        //Annat spel
+                        break;
+                    default:
+                        ui.Output("Choose a number for an existing game");
+                        break;
+                }
+            } catch (Exception ex) { Console.WriteLine("Could not run GameSelector \n" + ex); }
 
         }
     }
-    
 }
