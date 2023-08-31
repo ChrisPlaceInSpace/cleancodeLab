@@ -6,74 +6,90 @@ namespace LabbCC.MooGame
     {
         IUI ui = new ConsoleIO();
 
-        public int Logic(int numberOfGuesses)
+        public int PlayLogic(int numberOfGuesses)
         {
-            string result;
-            string goal = GoalGenerator();
-            //comment out or remove next line to play real games!
-            ui.Output("For practice, number is: " + goal + "\n");
-            do
+            try
             {
-                string guess = ui.Input();
-                numberOfGuesses++;
-                result = CheckBullAndCow(goal, guess);
-                ui.Output(result + "\n");
-            } while (!result.StartsWith("BBBB,"));
-            return numberOfGuesses;
+                string guess;
+                string goal = GoalGenerator();
+                //comment out or remove next line to play real games!
+                ui.Output("For practice, number is: " + goal + "\n");
+                do
+                {
+                    guess = ui.Input();
+                    numberOfGuesses++;
+                    ui.Output(BullAndCowStringBuilder(goal, guess));
+                } while (!BullAndCowStringBuilder(goal, guess).StartsWith("BBBB"));
+                return numberOfGuesses;
+            }
+            catch (Exception ex) { Console.WriteLine("Could not run PlayLogics. \n" + ex); return 0; }
         }
         public string GoalGenerator()
         {
-            Random randomGenerator = new Random();
-            string goal = "";
-            for (int i = 0; i < 4; i++)
+            try
             {
-                int random = randomGenerator.Next(10);
-                string randomDigit = "" + random;
-
-                goal += randomDigit;
+                Random randomGenerator = new Random();
+                string goal = "";
+                for (int i = 0; i < 4; i++)
+                {
+                    int random = randomGenerator.Next(10);
+                    goal += random;
+                }
+                return goal;
             }
-            return goal;
+            catch (Exception ex) { Console.WriteLine("Could not generate target numbers. \n" + ex); return ""; }
         }
-        public string CheckBullAndCow(string goal, string guess)
+        public string BullAndCowStringBuilder(string goal, string guess)
         {
+            try
+            {
+                int bulls = CountBull(goal, guess);
+                int cows = CountCow(goal, guess);
 
-            int bulls = CountBull(goal, guess);
-            int cows = CountCow(goal, guess);
+                string bullCow = new string('B', bulls) + new string('C', cows);
 
-            string result = new string('B', bulls) + "," + new string('C', cows);
-
-            return result;
+                return bullCow;
+            }
+            catch (Exception ex) { Console.WriteLine("Could not compile result from cows and bulls. \n" + ex); return ""; }
 
         }
         public int CountBull(string goal, string guess)
         {
-            int bull = 0;
-            guess += "    ";
-            for (int i = 0; i < 4; i++)
+            try
             {
-                if (goal[i] == guess[i])
+                int bull = 0;
+                guess += "    ";
+                for (int i = 0; i < 4; i++)
                 {
-                    bull++;
+                    if (goal[i] == guess[i])
+                    {
+                        bull++;
+                    }
                 }
+                return bull;
             }
-            return bull;
+            catch (Exception ex) { Console.WriteLine("Could not count bulls. \n" + ex); return 0; }
         }
         public int CountCow(string goal, string guess)
         {
-            int cow = 0;
-            guess += "    ";
-            for (int i = 0; i < 4; i++)
+            try
             {
-                for (int j = 0; j < 4; j++)
+                int cow = 0;
+                guess += "    ";
+                for (int i = 0; i < 4; i++)
                 {
-                    if (goal[i] == guess[j] && i != j)
+                    for (int j = 0; j < 4; j++)
                     {
-                        cow++;
-                    }
+                        if (goal[i] == guess[j] && i != j)
+                        {
+                            cow++;
+                        }
 
+                    }
                 }
+                return cow;
             }
-            return cow;
+            catch (Exception ex) { Console.WriteLine("Could not count cows. \n" + ex); return 0; }
         }
 
     }

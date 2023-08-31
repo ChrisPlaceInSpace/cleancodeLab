@@ -17,24 +17,40 @@ public class PlayerDAO : IPlayerDAO
     }
     public void UpdatePosition(int guess)
     {
+        try
+        {
         NumberOfGuesses += guess;
         GamesPlayed++;
+        }
+        catch (Exception ex) { Console.WriteLine("Could not update position. \n" + ex); }
     }
 
     public double Average()
     {
+        try 
+        { 
         return (double)NumberOfGuesses / GamesPlayed;
+        }
+        catch (Exception ex) { Console.WriteLine("Could not calculate average. \n" + ex); return 0; }
     }
 
 
     public override bool Equals(Object obj) //Fråga Benji
     {
+        try
+        {
         PlayerDAO other = (PlayerDAO)obj;
         return PlayerName.Equals(other.PlayerName);
+        }
+        catch (Exception ex) { Console.WriteLine("Could not compare player in scoreboard. \n" + ex); return false; }
     }
 
     public override int GetHashCode()
     {
+        try
+        {
         return PlayerName.GetHashCode();
+        }
+        catch (Exception ex) { Console.WriteLine("Could not make Hashcode. ???? Huh? If you find this, you win! \n" + ex); return 0; }
     }
 }

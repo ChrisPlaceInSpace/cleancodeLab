@@ -2,6 +2,6 @@
 
 public interface IGameLogic
 {
-    int Logic(int numberOfGuesses);
+    int PlayLogic(int numberOfGuesses);
     string GoalGenerator();
 }

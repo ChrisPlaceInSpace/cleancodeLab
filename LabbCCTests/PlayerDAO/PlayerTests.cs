@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using LabbCCTests;
 
-namespace LabbCC.Tests
+namespace LabbCCTests.PlayerDAO
 {
     [TestClass()]
     public class PlayerTests
@@ -19,13 +18,13 @@ namespace LabbCC.Tests
         {
             Assert.AreEqual(2.5, playerDAO.Average());
         }
-        
+
         [TestMethod()]
         public void UpdatePositionTest()
         {
             int guessToAdd = 1;
             int initialGuesses = 5;
-            int initialGamesPlayed = 3;
+            int initialGamesPlayed = 2;
 
             playerDAO.UpdatePosition(guessToAdd);
             Assert.AreEqual(initialGuesses + guessToAdd, playerDAO.NumberOfGuesses);

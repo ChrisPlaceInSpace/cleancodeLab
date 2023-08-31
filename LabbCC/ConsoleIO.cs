@@ -2,7 +2,7 @@
 
 namespace LabbCC;
 
-internal class ConsoleIO : IUI
+public class ConsoleIO : IUI
 {
     public void Clear()
     {
@@ -11,7 +11,7 @@ internal class ConsoleIO : IUI
 
     public void ExitGame()
     {
-        System.Environment.Exit(0);
+        Environment.Exit(0);
     }
 
     public string Input()

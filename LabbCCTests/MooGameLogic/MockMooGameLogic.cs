@@ -1,40 +1,48 @@
-﻿using LabbCC.Interfaces;
+﻿using LabbCC;
+using LabbCC.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
-namespace LabbCCTests;
+namespace LabbCCTests.MooGame;
 
 public class MockMooGameLogic : IGameLogic
 {
-    readonly IUI ui;
-    public string GoalGenerator()
-    {        
-        return GoalGenerator();
-    }
+    IUI ui = new ConsoleIO();
 
-    public int Logic(int numberOfGuesses)
+    public int PlayLogic(int numberOfGuesses)
     {
-        string result;
-        string goal = GoalGenerator();
+        string guess;
+        string goal = "0000";
         //comment out or remove next line to play real games!
         ui.Output("For practice, number is: " + goal + "\n");
         do
         {
-            string guess = ui.Input();
+            guess = "0000";
             numberOfGuesses++;
-            result = CheckBullAndCow(goal, guess);
-            ui.Output(result + "\n");
-        } while (!result.StartsWith("BBBB,"));
+            ui.Output(BullAndCowStringBuilder(goal, guess));
+        } while (!BullAndCowStringBuilder(goal, guess).StartsWith("BBBB"));
         return numberOfGuesses;
     }
-    public string CheckBullAndCow(string goal, string guess)
+    public string GoalGenerator()
+    {
+        Random randomGenerator = new Random();
+        string goal = "";
+        for (int i = 0; i < 4; i++)
+        {
+            int random = randomGenerator.Next(10);
+            goal += random;
+        }
+        return goal;
+    }
+    public string BullAndCowStringBuilder(string goal, string guess)
     {
 
         int bulls = CountBull(goal, guess);
         int cows = CountCow(goal, guess);
 
-        string result = new string('B', bulls) + "," + new string('C', cows);
+        string bullCow = new string('B', bulls) + new string('C', cows);
 
-        return result;
+        return bullCow;
 
     }
     public int CountBull(string goal, string guess)
