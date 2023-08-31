@@ -8,11 +8,8 @@ namespace MooGame
 	{
 		public static void Main(string[] args)
         {
-
-            IUI ui = new ConsoleIO();
-            GameController gameController = new GameController();
-            //Debug.Write(game.ToString());
-            //Debug.WriteLine("Test");
+                        
+            GameController gameController = new GameController();            
             gameController.SelectGame();
             
         }

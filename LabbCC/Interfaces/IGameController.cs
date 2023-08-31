@@ -3,6 +3,6 @@
     public interface IGameController
     {
         void SelectGame();
-        bool Continue();
+        
     }
 }
