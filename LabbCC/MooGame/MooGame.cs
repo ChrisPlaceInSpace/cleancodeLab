@@ -5,20 +5,22 @@ namespace LabbCC.MooGame;
 public class MooGame : IGame
 {
     public IUI ui = new ConsoleIO();
+    IFilehandler _filehandler;
 
     readonly MooGameLogic mooGameLogic = new MooGameLogic();
     public string GameName { get; set; }
-    public MooGame(string gameName)
+    public MooGame(string gameName, IFilehandler filehandler)
     {
         GameName = gameName;
+        _filehandler = filehandler;
     }
 
     public void RunGame()     //Göra denna mer generisk för fler spel?
     {
         try
         {
-            IFilehandler filehandler = new Filehandler("MooGameScore.txt", "#&#");
-            IScoreBoardHandler scoreBoardHandler = new ScoreBoardHandler(filehandler);
+            
+            IScoreBoardHandler scoreBoardHandler = new ScoreBoardHandler(_filehandler);
             bool gameOn = true;
             ui.Clear();
             ui.Output("Enter your user name:\n");
@@ -31,7 +33,7 @@ public class MooGame : IGame
                 ui.Output("New game:\n");
                 int numberOfGuesses = 0;
                 numberOfGuesses = mooGameLogic.PlayLogic(numberOfGuesses);
-                filehandler.WriteToFile(userName, numberOfGuesses);
+                _filehandler.WriteToFile(userName, numberOfGuesses);
                 ui.Output($"Correct, it took {numberOfGuesses} guesses\n");
                 scoreBoardHandler.UpdateScoreBoard(playerStats);
                 scoreBoardHandler.PrintScoreBoard(playerStats);

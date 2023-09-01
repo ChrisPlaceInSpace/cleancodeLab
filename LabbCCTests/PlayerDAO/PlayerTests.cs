@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit.Sdk;
 
 namespace LabbCCTests.PlayerDAO
 {
@@ -30,5 +31,6 @@ namespace LabbCCTests.PlayerDAO
             Assert.AreEqual(initialGuesses + guessToAdd, playerDAO.NumberOfGuesses);
             Assert.AreEqual(initialGamesPlayed + 1, playerDAO.GamesPlayed);
         }
+
     }
 }

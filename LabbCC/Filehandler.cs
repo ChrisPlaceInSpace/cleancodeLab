@@ -1,5 +1,4 @@
-﻿using System.IO;
-using LabbCC.Interfaces;
+﻿using LabbCC.Interfaces;
 
 namespace LabbCC;
 
@@ -33,7 +32,7 @@ public class Filehandler : IFilehandler
         }
     }
 
-    public List<string> Read()
+    public List<string> ReadFile()
     {
         try
         {

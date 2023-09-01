@@ -16,7 +16,7 @@ public class ScoreBoardHandler : IScoreBoardHandler
     {
         try
         {
-            List<string> lines = filehandler.Read();
+            List<string> lines = filehandler.ReadFile();
             foreach (string line in lines)
             {
                 string[] nameAndScore = line.Split(new string[] { filehandler.Separator }, StringSplitOptions.None);
