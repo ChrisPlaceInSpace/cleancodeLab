@@ -8,7 +8,8 @@ namespace LabbCC.MooGame
 	{
 		public static void Main(string[] args)
         {
-                GameController gameController = new GameController();
+            IUI ui = new ConsoleIO();
+                GameController gameController = new GameController(ui);
                 gameController.SelectGame();
         }
 

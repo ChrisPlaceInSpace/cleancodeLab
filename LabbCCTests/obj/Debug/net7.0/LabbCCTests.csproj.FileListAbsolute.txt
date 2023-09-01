@@ -208,3 +208,6 @@ C:\Users\Joakim\Desktop\Skola\Clean Code\laboration\Lab\LabbCCTests\obj\Debug\ne
 C:\Users\Joakim\Desktop\Skola\Clean Code\laboration\Lab\LabbCCTests\obj\Debug\net7.0\LabbCCTests.pdb
 C:\Users\Joakim\Desktop\Skola\Clean Code\laboration\Lab\LabbCCTests\obj\Debug\net7.0\LabbCCTests.genruntimeconfig.cache
 C:\Users\Joakim\Desktop\Skola\Clean Code\laboration\Lab\LabbCCTests\obj\Debug\net7.0\ref\LabbCCTests.dll
+C:\Users\chris\Desktop\.Net utveckling\Clean Code\laboration\LabbCC\LabbCCTests\bin\Debug\net7.0\xunit.abstractions.dll
+C:\Users\chris\Desktop\.Net utveckling\Clean Code\laboration\LabbCC\LabbCCTests\bin\Debug\net7.0\xunit.core.dll
+C:\Users\chris\Desktop\.Net utveckling\Clean Code\laboration\LabbCC\LabbCCTests\bin\Debug\net7.0\xunit.execution.dotnet.dll
