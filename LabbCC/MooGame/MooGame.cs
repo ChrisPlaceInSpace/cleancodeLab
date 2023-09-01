@@ -4,15 +4,16 @@ namespace LabbCC.MooGame;
 
 public class MooGame : IGame
 {
-    public IUI ui = new ConsoleIO();
+    IUI ui;
     IFilehandler _filehandler;
 
     readonly MooGameLogic mooGameLogic = new MooGameLogic();
     public string GameName { get; set; }
-    public MooGame(string gameName, IFilehandler filehandler)
+    public MooGame(string gameName, IFilehandler filehandler, IUI ui)
     {
         GameName = gameName;
         _filehandler = filehandler;
+        this.ui = ui;
     }
 
     public void RunGame()     //Göra denna mer generisk för fler spel?

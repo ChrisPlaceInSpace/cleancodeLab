@@ -6,32 +6,21 @@ namespace LabbCCTests.FileHandlerTest
     [TestClass()]
     public class FilehandlerTests
     {
-        
-        
-        [TestMethod()]
-        public void FilehandlerTest()
-        {
-            
-        }
+              
 
         [TestMethod()]
-        public void WriteToFileTest()
+        public void FileHandlingTest()
         {
-            MockFileHandler fileHandler = new MockFileHandler("TestFile.txt", "#%#");
+            MockFileHandler fileHandler = new MockFileHandler("TestFile.txt", "#&#");
             string userName = "admin";
             int numberOfGuesses = 1;
             fileHandler.WriteToFile(userName, numberOfGuesses);
             Assert.IsTrue(File.Exists(fileHandler.File));
-            string readText = File.ReadAllText(fileHandler.File);
-            Assert.AreEqual("admin#%#1", readText);
+            List<string> readText = new List<string>(fileHandler.ReadFile());
+            string actualText = readText[0];
+            Assert.AreEqual("admin#&#1".Trim(), actualText.Trim());
             File.Delete(fileHandler.File);
         }
 
-        [TestMethod()]
-        public void ReadFileTest()
-        {
-            //List<string> lines = new List<string>();
-            //Assert.AreEqual(lines, fileHandler.ReadFile());
-        }
     }
 }
