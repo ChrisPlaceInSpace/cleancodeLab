@@ -4,14 +4,15 @@ namespace LabbCC;
 
 public class Filehandler : IFilehandler
 {
-    private IUI ui = new ConsoleIO();
+    private IUI ui;
     public string Separator { get; set; }
     public string File { get; set; }
 
-    public Filehandler(string file, string separator)
+    public Filehandler(string file, string separator, IUI ui)
     {
         this.File = file;
         this.Separator = separator;
+        this.ui = ui;
     }
 
 
@@ -47,7 +48,7 @@ public class Filehandler : IFilehandler
             streamReader.Close();
             return lines;
         }
-        catch (Exception ex) { Console.WriteLine("Could not read from File. \n" + ex); return null; }
+        catch (Exception ex) { ui.Output("Could not read from File. \n" + ex); return null; }
     }
 
     

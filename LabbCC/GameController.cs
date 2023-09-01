@@ -8,7 +8,7 @@ public class GameController : IGameController
     private readonly IUI _ui;
     public GameController(IUI ui) 
     {
-        games.Add(new MooGame("Moo", new Filehandler("MooGameScore.txt", "#&#")));
+        games.Add(new MooGame("Moo", new Filehandler("MooGameScore.txt", "#&#", ui), ui));
         _ui = ui;
     }
     
@@ -19,9 +19,7 @@ public class GameController : IGameController
         {
             try
             {
-               
-
-               
+                              
                 switch (SelectedGameByUser())
                 {
                     case 0:
@@ -37,7 +35,7 @@ public class GameController : IGameController
                         _ui.Output("Choose a number for an existing game");
                         break;
                 }
-            } catch (Exception ex) { Console.WriteLine("Could not run GameSelector \n" + ex); }
+            } catch (Exception ex) { _ui.Output("Could not run GameSelector \n" + ex); }
 
         }
     }
