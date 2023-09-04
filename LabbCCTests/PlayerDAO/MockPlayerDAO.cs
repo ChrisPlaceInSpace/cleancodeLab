@@ -1,6 +1,6 @@
-﻿using LabbCC.Interfaces;
+﻿using LabbCC;
 
-namespace LabbCCTests.PlayerDAO;
+namespace LabbCCTests;
 
 public class MockPlayerDAO : IPlayerDAO
 {

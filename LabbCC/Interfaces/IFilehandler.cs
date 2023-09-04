@@ -1,10 +1,8 @@
-﻿namespace LabbCC.Interfaces
+﻿namespace LabbCC;
+
+public interface IDataHandler   //Byta namn till DataHandler?
 {
-    public interface IFilehandler   //Byta namn till DataHandler?
-    {
-        public string File { get; set;  }
-        public string Separator { get; set; }
-        List<string> ReadFile();
-        void WriteToFile(string userName, int numberOfGuesses);
-    }
+    public string File { get; set;  }
+    List<string> ReadFile();
+    void WriteToFile(string userName, int numberOfGuesses);
 }

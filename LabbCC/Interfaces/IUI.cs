@@ -1,6 +1,5 @@
-﻿using System.Xml.Serialization;
-
-namespace LabbCC.Interfaces;
+﻿
+namespace LabbCC;
 
 public interface IUI
 {

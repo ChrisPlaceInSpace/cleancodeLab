@@ -1,26 +1,27 @@
 ﻿
 namespace LabbCC;
 
-public class MooGame : IGame
+internal class MasterMindGame : IGame
 {
     private readonly IUI ui;
-    private readonly Filehandler _filehandler;
-
+    private readonly Filehandler filehandler;
     public string GameName { get; set; }
-    public MooGame(string gameName, Filehandler filehandler, IUI ui)
+
+    public MasterMindGame(string gameName, Filehandler filehandler, IUI ui)
     {
-        GameName = gameName;
-        _filehandler = filehandler;
+        this.GameName = gameName;
+        this.filehandler = filehandler;
         this.ui = ui;
     }
-    IGameLogic mooGameLogic => new MooGameLogic(ui);
 
-    public void RunGame()     //Göra denna mer generisk för fler spel?
+    IGameLogic masterMindGameLogic => new MasterMindGameLogic(ui);
+
+    public void RunGame()
     {
         try
         {
-            
-            IScoreBoardHandler scoreBoardHandler = new ScoreBoardHandler(_filehandler, ui);
+
+            IScoreBoardHandler scoreBoardHandler = new ScoreBoardHandler(filehandler, ui);
             bool gameOn = true;
             ui.Clear();
             ui.Output("Enter your user name:\n");
@@ -30,10 +31,12 @@ public class MooGame : IGame
             {
                 List<PlayerDAO> playerStats = new List<PlayerDAO>();
                 ui.Clear();
+                ui.Output("Guess the Colors:");
+                ui.Output("R(Red), G(Green), B(Blue), Y(Yellow), W(White), P(Pink)\n");
                 ui.Output("New game:\n");
                 int numberOfGuesses = 0;
-                numberOfGuesses = mooGameLogic.PlayLogic(numberOfGuesses);
-                _filehandler.WriteToFile(userName, numberOfGuesses);
+                numberOfGuesses = masterMindGameLogic.PlayLogic(numberOfGuesses);
+                filehandler.WriteToFile(userName, numberOfGuesses);
                 ui.Output($"Correct, it took {numberOfGuesses} guesses\n");
                 scoreBoardHandler.UpdateScoreBoard(playerStats);
                 scoreBoardHandler.PrintScoreBoard(playerStats);
@@ -43,7 +46,7 @@ public class MooGame : IGame
         catch (Exception ex)
         {
             ui.Output("Game could not run. \n" + ex);
-        }
+        };
     }
     public bool Continue()
     {
@@ -71,8 +74,6 @@ public class MooGame : IGame
             }
             return false;
         }
-        catch (Exception ex) { ui.Output("Could not continue to run properly. \n" + ex); return false; }
+        catch (Exception ex) { ui.Output("Could not continue to run properly. \n" + ex); return false; };
     }
-
-
 }

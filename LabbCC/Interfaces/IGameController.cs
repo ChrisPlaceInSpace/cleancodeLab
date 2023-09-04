@@ -1,8 +1,7 @@
-﻿namespace LabbCC.Interfaces
+﻿namespace LabbCC;
+
+public interface IGameController
 {
-    public interface IGameController
-    {
-        void SelectGame();
-        
-    }
+    void SelectGame();
+    
 }

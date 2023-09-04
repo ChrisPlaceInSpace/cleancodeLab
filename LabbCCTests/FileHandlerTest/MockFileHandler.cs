@@ -1,8 +1,8 @@
-﻿using LabbCC.Interfaces;
+﻿using LabbCC;
 
-namespace LabbCCTests.FileHandlerTest;
+namespace LabbCCTests;
 
-internal class MockFileHandler : IFilehandler
+internal class MockFileHandler : IDataHandler
 {
     public string File { get; set; }
     public string Separator { get; set; }   //Gör internal?

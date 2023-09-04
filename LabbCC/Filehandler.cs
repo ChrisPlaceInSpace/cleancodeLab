@@ -1,17 +1,17 @@
-﻿using LabbCC.Interfaces;
+﻿
 
 namespace LabbCC;
 
-public class Filehandler : IFilehandler
+public class Filehandler : IDataHandler
 {
-    private IUI ui;
-    public string Separator { get; set; }
+    private readonly IUI ui;
+    public string TextSeparator { get; set; }
     public string File { get; set; }
 
-    public Filehandler(string file, string separator, IUI ui)
+    public Filehandler(string file, string textSeparator, IUI ui)
     {
         this.File = file;
-        this.Separator = separator;
+        this.TextSeparator = textSeparator;
         this.ui = ui;
     }
 
@@ -22,7 +22,7 @@ public class Filehandler : IFilehandler
         {
             StreamWriter streamWriter = new StreamWriter(File, append: true);
             {
-                streamWriter.WriteLine($"{userName}{Separator}{numberOfGuesses}");
+                streamWriter.WriteLine($"{userName}{TextSeparator}{numberOfGuesses}");
                 streamWriter.Close();
             }
         }
