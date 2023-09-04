@@ -2,15 +2,15 @@
 
 namespace LabbCCTests;
 
-internal class MockFileHandler : IDataHandler
+public class MockFileHandler : IDataHandler
 {
     public string File { get; set; }
-    public string Separator { get; set; }   //Gör internal?
+    public string TextSeparator { get; set; }
 
     public MockFileHandler(string file, string separator)
     {
         this.File = file;
-        this.Separator = separator;
+        this.TextSeparator = separator;
     }
 
     public List<string> ReadFile()
@@ -31,7 +31,7 @@ internal class MockFileHandler : IDataHandler
     {
         StreamWriter streamWriter = new StreamWriter(File, append: true);
         {
-            streamWriter.WriteLine($"{userName}{Separator}{numberOfGuesses}");
+            streamWriter.WriteLine($"{userName}{TextSeparator}{numberOfGuesses}");
             streamWriter.Close();
         }
         

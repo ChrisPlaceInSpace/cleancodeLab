@@ -24,7 +24,7 @@ public class MooGameLogicTests
     }
 
     [TestMethod()]
-    public void BullAndCowStringBuilderTest()
+    public void GameStringBuilderTest()
     {
         MockMooGameLogic mooGameLogic = new MockMooGameLogic();
         string goal = "0000";
@@ -34,7 +34,7 @@ public class MooGameLogicTests
     }
 
     [TestMethod()]
-    public void CountBullTest()
+    public void CountHitTest()
     {
         MockMooGameLogic mooGameLogic = new MockMooGameLogic();
         string goal = "0000";
@@ -43,7 +43,7 @@ public class MooGameLogicTests
     }
 
     [TestMethod()]
-    public void CountCowTest()
+    public void CountMissTest()
     {
         string goal = "1234";
         string guess = "4321";

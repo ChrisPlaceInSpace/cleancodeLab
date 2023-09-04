@@ -12,8 +12,7 @@ public class ScoreBoardHandler : IScoreBoardHandler
         this.filehandler = filehandler;
         this.ui = ui;
     }
-
-    public void UpdateScoreBoard(List<PlayerDAO> playerStats)
+    public void UpdateScoreBoard(List<PlayerDAO> players)
     {
         try
         {
@@ -24,15 +23,15 @@ public class ScoreBoardHandler : IScoreBoardHandler
                 string name = nameAndScore[0];
                 int score = Convert.ToInt32(nameAndScore[1]);
                 PlayerDAO playerData = new PlayerDAO(name, score, ui);
-                int position = playerStats.IndexOf(playerData);
+                int position = players.IndexOf(playerData);
 
                 if (position < 0)
                 {
-                    playerStats.Add(playerData);
+                    players.Add(playerData);
                 }
                 else
                 {
-                    playerStats[position].UpdatePosition(playerData.NumberOfGuesses);
+                    UpdatePosition(players[position], playerData.NumberOfGuesses);
                 }
             }
         }
@@ -40,19 +39,19 @@ public class ScoreBoardHandler : IScoreBoardHandler
 
     }
 
-    public void PrintScoreBoard(List<PlayerDAO> playerStats)
+    public void PrintScoreBoard(List<PlayerDAO> players)
     {
         //Sorterar poängtavlan baserat på resultatet av Average
         try
-        {playerStats.Sort((p1, p2) => p1.Average().CompareTo(p2.Average()));}
+        {players.Sort((p1, p2) => CalculateAverage(p1).CompareTo(CalculateAverage(p2)));}
         catch (Exception ex) { ui.Output("Could not sort. \n" + ex);}
 
         try
         {
             ui.Output("Player   games average");
-            foreach (PlayerDAO player in playerStats)
+            foreach (PlayerDAO player in players)
             {
-                ui.Output(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.PlayerName, player.GamesPlayed, player.Average()));
+                ui.Output(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.PlayerName, player.GamesPlayed, CalculateAverage(player)));
             }
         }
         catch (Exception ex) { ui.Output("Could not print highscore. \n" + ex); }
@@ -70,5 +69,24 @@ public class ScoreBoardHandler : IScoreBoardHandler
                 return truncatedString;
             }
             return incomingString;
+    }
+
+    public void UpdatePosition(PlayerDAO player, int guess)
+    {
+        try
+        {
+            player.NumberOfGuesses += guess;
+            player.GamesPlayed++;
+        }
+        catch (Exception ex) { ui.Output("Could not update position. \n" + ex); }
+    }
+
+    public double CalculateAverage(PlayerDAO player)
+    {
+        try
+        {
+            return (double)player.NumberOfGuesses / player.GamesPlayed;
+        }
+        catch (Exception ex) { ui.Output("Could not calculate average. \n" + ex); return 0; }
     }
 }

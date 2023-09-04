@@ -2,20 +2,18 @@
 
 namespace LabbCCTests;
 
-public class MockPlayerDAO : IPlayerDAO
+public class MockPlayerDAO
 {
     public int GamesPlayed { get; set; }
 
     public string PlayerName { get; set; } = string.Empty;
     public int NumberOfGuesses { get; set; }
-    public double Average()
+    public MockPlayerDAO(int gamesPlayed, string playerName, int numberOfGuesses)
     {
-        return (double)NumberOfGuesses / GamesPlayed;
-    }
-
-    public void UpdatePosition(int guess)
-    {
-        NumberOfGuesses += guess;
-        GamesPlayed++;
+        this.GamesPlayed = gamesPlayed;
+        this.PlayerName = playerName;
+        this.NumberOfGuesses = numberOfGuesses;
     }
 }
+
+
