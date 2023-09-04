@@ -1,15 +1,16 @@
-﻿using LabbCC.Interfaces;
+﻿
 using System.Text;
 
 namespace LabbCC;
 
 public class ScoreBoardHandler : IScoreBoardHandler
 {
-    private IUI ui = new ConsoleIO();
-    IFilehandler filehandler;
-    public ScoreBoardHandler(IFilehandler filehandler)
+    private readonly IUI ui;
+    private readonly Filehandler filehandler;
+    public ScoreBoardHandler(Filehandler filehandler, IUI ui)
     {
         this.filehandler = filehandler;
+        this.ui = ui;
     }
 
     public void UpdateScoreBoard(List<PlayerDAO> playerStats)
@@ -19,10 +20,10 @@ public class ScoreBoardHandler : IScoreBoardHandler
             List<string> lines = filehandler.ReadFile();
             foreach (string line in lines)
             {
-                string[] nameAndScore = line.Split(new string[] { filehandler.Separator }, StringSplitOptions.None);
+                string[] nameAndScore = line.Split(new string[] { filehandler.TextSeparator }, StringSplitOptions.None);
                 string name = nameAndScore[0];
                 int score = Convert.ToInt32(nameAndScore[1]);
-                PlayerDAO playerData = new PlayerDAO(name, score);
+                PlayerDAO playerData = new PlayerDAO(name, score, ui);
                 int position = playerStats.IndexOf(playerData);
 
                 if (position < 0)
@@ -35,7 +36,7 @@ public class ScoreBoardHandler : IScoreBoardHandler
                 }
             }
         }
-        catch(Exception ex) { Console.WriteLine("Could not update Scoreboard. \n" + ex); }
+        catch(Exception ex) { ui.Output("Could not update Scoreboard. \n" + ex); }
 
     }
 
@@ -44,7 +45,7 @@ public class ScoreBoardHandler : IScoreBoardHandler
         //Sorterar poängtavlan baserat på resultatet av Average
         try
         {playerStats.Sort((p1, p2) => p1.Average().CompareTo(p2.Average()));}
-        catch (Exception ex) { Console.WriteLine("Could not sort. \n" + ex);}
+        catch (Exception ex) { ui.Output("Could not sort. \n" + ex);}
 
         try
         {
@@ -54,7 +55,7 @@ public class ScoreBoardHandler : IScoreBoardHandler
                 ui.Output(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.PlayerName, player.GamesPlayed, player.Average()));
             }
         }
-        catch (Exception ex) { Console.WriteLine("Could not print highscore. \n" + ex); }
+        catch (Exception ex) { ui.Output("Could not print highscore. \n" + ex); }
 
     }   
         

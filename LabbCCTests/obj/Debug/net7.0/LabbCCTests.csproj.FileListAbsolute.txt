@@ -211,3 +211,6 @@ C:\Users\Joakim\Desktop\Skola\Clean Code\laboration\Lab\LabbCCTests\obj\Debug\ne
 C:\Users\chris\Desktop\.Net utveckling\Clean Code\laboration\LabbCC\LabbCCTests\bin\Debug\net7.0\xunit.abstractions.dll
 C:\Users\chris\Desktop\.Net utveckling\Clean Code\laboration\LabbCC\LabbCCTests\bin\Debug\net7.0\xunit.core.dll
 C:\Users\chris\Desktop\.Net utveckling\Clean Code\laboration\LabbCC\LabbCCTests\bin\Debug\net7.0\xunit.execution.dotnet.dll
+C:\Users\Joakim\Desktop\Skola\Clean Code\laboration\Lab\LabbCCTests\bin\Debug\net7.0\xunit.abstractions.dll
+C:\Users\Joakim\Desktop\Skola\Clean Code\laboration\Lab\LabbCCTests\bin\Debug\net7.0\xunit.core.dll
+C:\Users\Joakim\Desktop\Skola\Clean Code\laboration\Lab\LabbCCTests\bin\Debug\net7.0\xunit.execution.dotnet.dll

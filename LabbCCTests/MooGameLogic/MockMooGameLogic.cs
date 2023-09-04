@@ -1,7 +1,6 @@
 ﻿using LabbCC;
-using LabbCC.Interfaces;
 
-namespace LabbCCTests.MooGame;
+namespace LabbCCTests;
 
 public class MockMooGameLogic : IGameLogic
 {
@@ -17,8 +16,8 @@ public class MockMooGameLogic : IGameLogic
         {
             guess = "0000";
             numberOfGuesses++;
-            ui.Output(BullAndCowStringBuilder(goal, guess));
-        } while (!BullAndCowStringBuilder(goal, guess).StartsWith("BBBB"));
+            ui.Output(GameStringBuilder(goal, guess));
+        } while (!GameStringBuilder(goal, guess).StartsWith("BBBB"));
         return numberOfGuesses;
     }
     public string GoalGenerator()
@@ -32,18 +31,18 @@ public class MockMooGameLogic : IGameLogic
         }
         return goal;
     }
-    public string BullAndCowStringBuilder(string goal, string guess)
+    public string GameStringBuilder(string goal, string guess)
     {
 
-        int bulls = CountBull(goal, guess);
-        int cows = CountCow(goal, guess);
+        int bulls = CountHit(goal, guess);
+        int cows = CountMiss(goal, guess);
 
         string bullCow = new string('B', bulls) + new string('C', cows);
 
         return bullCow;
 
     }
-    public int CountBull(string goal, string guess)
+    public int CountHit(string goal, string guess)
     {
         int bull = 0;
         guess += "    ";
@@ -56,7 +55,7 @@ public class MockMooGameLogic : IGameLogic
         }
         return bull;
     }
-    public int CountCow(string goal, string guess)
+    public int CountMiss(string goal, string guess)
     {
         int cow = 0;
         guess += "    ";

@@ -9,3 +9,10 @@ ashd#&#3
 ui#&#4
 ui#&#1
 ui#&#5
+asd#&#1
+average#&#12
+average#&#9
+asd#&#5
+asd#&#6
+asd#&#7
+asd#&#2

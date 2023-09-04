@@ -1,12 +1,8 @@
-﻿namespace LabbCC.Interfaces
+﻿namespace LabbCC;
+
+public interface IPlayerDAO
 {
-    public interface IPlayerDAO
-    {
-        public int GamesPlayed { get; set; }
-        string PlayerName { get; }
-        int NumberOfGuesses { get; }
-        double Average();
-        //bool Equals(object obj);
-        void UpdatePosition(int guess);
-    }
+    public int GamesPlayed { get; set; }
+    string PlayerName { get; }
+    int NumberOfGuesses { get; }
 }
