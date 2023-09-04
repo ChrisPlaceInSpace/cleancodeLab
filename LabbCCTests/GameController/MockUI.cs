@@ -30,6 +30,10 @@ public class MockUI : IUI
                 return "1";
             case 2:
                 return "HEJ";
+                case 3:
+                return "0000";
+                case 4:
+                return "1111";
             default:
                 return "";
         }

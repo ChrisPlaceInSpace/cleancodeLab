@@ -15,7 +15,7 @@ public class MooGame : IGame
     }
     IGameLogic mooGameLogic => new MooGameLogic(ui);
 
-    public void RunGame()     //Göra denna mer generisk för fler spel?
+    public void RunGame()
     {
         try
         {
