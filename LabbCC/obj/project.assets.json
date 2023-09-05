@@ -8,19 +8,19 @@
     "net7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Joakim\\.nuget\\packages\\": {}
+    "C:\\Users\\chris\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Joakim\\Desktop\\Skola\\Clean Code\\laboration\\Lab\\LabbCC\\LabbCC.csproj",
+      "projectUniqueName": "C:\\Users\\chris\\Desktop\\.Net utveckling\\Clean Code\\laboration\\LabbCC\\LabbCC\\LabbCC.csproj",
       "projectName": "LabbCC",
-      "projectPath": "C:\\Users\\Joakim\\Desktop\\Skola\\Clean Code\\laboration\\Lab\\LabbCC\\LabbCC.csproj",
-      "packagesPath": "C:\\Users\\Joakim\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Joakim\\Desktop\\Skola\\Clean Code\\laboration\\Lab\\LabbCC\\obj\\",
+      "projectPath": "C:\\Users\\chris\\Desktop\\.Net utveckling\\Clean Code\\laboration\\LabbCC\\LabbCC\\LabbCC.csproj",
+      "packagesPath": "C:\\Users\\chris\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\chris\\Desktop\\.Net utveckling\\Clean Code\\laboration\\LabbCC\\LabbCC\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Joakim\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\chris\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -61,7 +61,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }

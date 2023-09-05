@@ -2,6 +2,6 @@
 
 public interface IGameLobby
 {
-    void SelectGame();
+    void GameMenu();
     
 }

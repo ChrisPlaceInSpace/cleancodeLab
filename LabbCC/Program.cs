@@ -7,7 +7,7 @@ class MainClass
     {
         IUI ui = new ConsoleIO();
         GameLobby gameLobby = new GameLobby(ui);
-        gameLobby.SelectGame();
+        gameLobby.GameMenu();
     }
 
 }
