@@ -1,6 +1,6 @@
 ﻿namespace LabbCC;
 
-public interface IGameController
+public interface IGameLobby
 {
     void SelectGame();
     

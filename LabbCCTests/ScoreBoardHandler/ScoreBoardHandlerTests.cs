@@ -9,7 +9,8 @@ namespace LabbCC.Tests;
 public class ScoreBoardHandlerTests
 {
     IUI ui;
-    MockFileHandler fileHandler = new MockFileHandler("MockScoreBoardTest.txt", "#&#");
+    const string seperator = "#&#";
+    MockFileHandler fileHandler = new MockFileHandler("MockScoreBoardTest.txt", seperator);
     MockScoreBoardHandler mockScoreBoardHandler;
 
     [TestMethod()]
@@ -22,8 +23,8 @@ public class ScoreBoardHandlerTests
         List<PlayerDAO> players = new List<PlayerDAO>();
         fileHandler.WriteToFile(userName, numberOfGuesses);
         mockScoreBoardHandler.UpdateScoreBoard(players);
-        string listAfterRunMethod = players[0].PlayerName + "#&#" + players[0].NumberOfGuesses.ToString();
-        Assert.AreEqual("qwerty#&#1".Trim(), listAfterRunMethod.Trim());
+        string listAfterRunMethod = players[0].PlayerName + seperator + players[0].NumberOfGuesses.ToString();
+        Assert.AreEqual(userName+ seperator+numberOfGuesses.ToString().Trim(), listAfterRunMethod.Trim());
         File.Delete(fileHandler.File);
     }
 
