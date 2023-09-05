@@ -1,5 +1,6 @@
 ﻿using LabbCCTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.ComponentModel;
 
 namespace LabbCC.Tests;
 
@@ -7,50 +8,60 @@ namespace LabbCC.Tests;
 public class ScoreBoardHandlerTests
 {
     IUI ui;
-    const string seperator = "#&#";
-    MockFileHandler fileHandler = new MockFileHandler("MockScoreBoardTest.txt", seperator);
-    MockScoreBoardHandler mockScoreBoardHandler;
-
+    MockFileHandler fileHandler;
+    MockScoreBoard mockScoreBoard;
+    string seperator { get; set; }
+    public ScoreBoardHandlerTests()
+    {
+        ui = new ConsoleIO();
+        fileHandler = new MockFileHandler("MockScoreBoardTest.txt");
+        mockScoreBoard = new MockScoreBoard(fileHandler, ui);
+        seperator = "#&#";
+    }
     [TestMethod()]
     public void UpdateScoreBoardTest()
     {
-        mockScoreBoardHandler = new MockScoreBoardHandler(fileHandler, ui);
         string userName = "qwerty";
         int numberOfGuesses = 1;
-
         List<PlayerDAO> players = new List<PlayerDAO>();
         fileHandler.WriteToFile(userName, numberOfGuesses);
-        mockScoreBoardHandler.UpdateScoreBoard(players);
+        mockScoreBoard.UpdateScoreBoard(players);
         string listAfterRunMethod = players[0].PlayerName + seperator + players[0].NumberOfGuesses.ToString();
-        Assert.AreEqual(userName+ seperator+numberOfGuesses.ToString().Trim(), listAfterRunMethod.Trim());
+        Assert.AreEqual(userName + seperator+numberOfGuesses.ToString().Trim(), listAfterRunMethod.Trim());
         File.Delete(fileHandler.File);
     }
-
     [TestMethod()]
     public void TruncateTest()
     {
-        mockScoreBoardHandler = new MockScoreBoardHandler(fileHandler, ui);
         string name = "Berserkers";
         string expectedNameAfterTruncate = "Berserker";
-        Assert.AreEqual(expectedNameAfterTruncate, mockScoreBoardHandler.Truncate(name));
+        Assert.AreEqual(expectedNameAfterTruncate, mockScoreBoard.Truncate(name));
     }
-
     [TestMethod()]
     public void UpdatePositionTest()
     {
-        mockScoreBoardHandler = new MockScoreBoardHandler(fileHandler, ui);
         PlayerDAO player = new PlayerDAO("JohnDoe", 1, ui);
         int guess = 1;
-        mockScoreBoardHandler.UpdatePosition(player, guess);
+        mockScoreBoard.UpdatePosition(player, guess);
         int guessesExpected = 2, gamesPlayedExpected = 2;
         Assert.AreEqual((guessesExpected, player.NumberOfGuesses),(gamesPlayedExpected, player.GamesPlayed));
     }
-
     [TestMethod()]
     public void CalculateAverageTest()
     {
-        mockScoreBoardHandler = new MockScoreBoardHandler(fileHandler, ui);
         PlayerDAO player = new PlayerDAO("Jens", 5, ui);
-        Assert.AreEqual(5, mockScoreBoardHandler.CalculateAverage(player));
+        Assert.AreEqual(5, mockScoreBoard.CalculateAverage(player));
     }
+    
+    // IN PROGRESS!
+    //[TestMethod()]
+    //public void SortScoreBoardTest()
+    //{
+    //    List<PlayerDAO> players = new List<PlayerDAO>()
+    //    {
+    //        { new PlayerDAO("PersonA", 4, ui) },
+    //        { new PlayerDAO("PersonB", 5, ui) },
+    //    };
+    //    Assert.AreEqual(,mockScoreBoard.SortScoreboard(players));
+    //}
 }

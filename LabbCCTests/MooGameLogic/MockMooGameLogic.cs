@@ -2,25 +2,18 @@
 
 namespace LabbCCTests;
 
-public class MockMooGameLogic : IGameLogic
+public class MockMooGameLogic : GameLogic
 {
-    IUI ui = new ConsoleIO();
-
-    public int PlayLogic(int numberOfGuesses)
+    IUI ui;
+    public MockMooGameLogic(IUI UI) : base(UI)
     {
-        string guess;
-        string goal = "0000";
-        //comment out or remove next line to play real games!
-        ui.Output("For practice, number is: " + goal + "\n");
-        do
-        {
-            guess = "0000";
-            numberOfGuesses++;
-            ui.Output(GameStringBuilder(goal, guess));
-        } while (!GameStringBuilder(goal, guess).StartsWith("BBBB"));
-        return numberOfGuesses;
+        this.ui = UI;
     }
-    public string GoalGenerator()
+    public override void PrintGameIntructions()
+    {
+        throw new NotImplementedException();
+    }
+    public override string GoalGenerator()
     {
         Random randomGenerator = new Random();
         string goal = "";
@@ -31,18 +24,22 @@ public class MockMooGameLogic : IGameLogic
         }
         return goal;
     }
-    public string GameStringBuilder(string goal, string guess)
+    public override int PlayLogic()
     {
-
-        int bulls = CountHit(goal, guess);
-        int cows = CountMiss(goal, guess);
-
-        string bullCow = new string('B', bulls) + new string('C', cows);
-
-        return bullCow;
-
+        string guess;
+        string goal = "0000";
+        int numberOfGuesses = 0;
+        //comment out or remove next line to play real games!
+        ui.Output("For practice, number is: " + goal + "\n");
+        do
+        {
+            guess = "0000";
+            numberOfGuesses++;
+            ui.Output(ResultFromGuess(goal, guess));
+        } while (!ResultFromGuess(goal, guess).StartsWith("BBBB"));
+        return numberOfGuesses;
     }
-    public int CountHit(string goal, string guess)
+    public override int CountHit(string goal, string guess)
     {
         int bull = 0;
         guess += "    ";
@@ -55,7 +52,7 @@ public class MockMooGameLogic : IGameLogic
         }
         return bull;
     }
-    public int CountMiss(string goal, string guess)
+    public override int CountMiss(string goal, string guess)
     {
         int cow = 0;
         guess += "    ";
@@ -71,5 +68,16 @@ public class MockMooGameLogic : IGameLogic
             }
         }
         return cow;
+    }
+    public override string ResultFromGuess(string goal, string guess)
+    {
+
+        int bulls = CountHit(goal, guess);
+        int cows = CountMiss(goal, guess);
+
+        string bullCow = new string('B', bulls) + new string('C', cows);
+
+        return bullCow;
+
     }
 }
