@@ -21,7 +21,7 @@ public class MooGameLogic : IGameLogic
             {
                 guess = ui.Input();
                 numberOfGuesses++;
-                ui.Output(GameStringBuilder(goal, guess));
+                ui.Output(GameStringBuilder(goal, guess)+"\n");
             } while (!GameStringBuilder(goal, guess).StartsWith("BBBB"));
             return numberOfGuesses;
         }
