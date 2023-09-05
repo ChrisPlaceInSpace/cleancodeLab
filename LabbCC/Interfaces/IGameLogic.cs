@@ -2,9 +2,12 @@
 
 public interface IGameLogic
 {
-    int PlayLogic(int numberOfGuesses);
+    string UserNameInput();
+    void PrintGameIntructions();
     string GoalGenerator();
-    string GameStringBuilder(string goal, string guess);
+    int PlayLogic();
     int CountHit(string goal, string guess);
     int CountMiss(string goal, string guess);
+    string ResultFromGuess(string goal, string guess);
+    bool Continue();
 }

@@ -3,26 +3,26 @@ using System.Text;
 
 namespace LabbCC;
 
-public class ScoreBoardHandler : IScoreBoardHandler
+public class ScoreBoard : IScoreBoard
 {
-    private readonly IUI ui;
-    private readonly Filehandler filehandler;
-    public ScoreBoardHandler(Filehandler filehandler, IUI ui)
+    private readonly IUI _ui;
+    private readonly Filehandler _filehandler;
+    public ScoreBoard(Filehandler filehandler, IUI ui)
     {
-        this.filehandler = filehandler;
-        this.ui = ui;
+        _filehandler = filehandler;
+        _ui = ui;
     }
     public void UpdateScoreBoard(List<PlayerDAO> players)
     {
         try
         {
-            List<string> lines = filehandler.ReadFile();
+            List<string> lines = _filehandler.ReadFile();
             foreach (string line in lines)
             {
-                string[] nameAndScore = line.Split(new string[] { filehandler.TextSeparator }, StringSplitOptions.None);
+                string[] nameAndScore = line.Split(new string[] { _filehandler.TextSeparator }, StringSplitOptions.None);
                 string name = nameAndScore[0];
                 int score = Convert.ToInt32(nameAndScore[1]);
-                PlayerDAO playerData = new PlayerDAO(name, score, ui);
+                PlayerDAO playerData = new PlayerDAO(name, score, _ui);
                 int position = players.IndexOf(playerData);
 
                 if (position < 0)
@@ -34,30 +34,24 @@ public class ScoreBoardHandler : IScoreBoardHandler
                     UpdatePosition(players[position], playerData.NumberOfGuesses);
                 }
             }
+            SortScoreboard(players);
         }
-        catch(Exception ex) { ui.Output("Could not update Scoreboard. \n" + ex); }
+        catch(Exception ex) { _ui.Output("Could not update Scoreboard. \n" + ex); }
 
     }
-
     public void PrintScoreBoard(List<PlayerDAO> players)
     {
-        //Sorterar poängtavlan baserat på resultatet av Average
-        try
-        {players.Sort((p1, p2) => CalculateAverage(p1).CompareTo(CalculateAverage(p2)));}
-        catch (Exception ex) { ui.Output("Could not sort. \n" + ex);}
-
         try
         {
-            ui.Output("Player   games average");
+            _ui.Output("Player   games average");
             foreach (PlayerDAO player in players)
             {
-                ui.Output(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.PlayerName, player.GamesPlayed, CalculateAverage(player)));
+                _ui.Output(string.Format("{0,-9}{1,5:D}{2,9:F2}", Truncate(player.PlayerName), player.GamesPlayed, CalculateAverage(player)));
             }
         }
-        catch (Exception ex) { ui.Output("Could not print highscore. \n" + ex); }
+        catch (Exception ex) { _ui.Output("Could not print highscore. \n" + ex); }
 
     }   
-        
     public string Truncate(string incomingString)
     {
             int maxLength = 9;
@@ -70,7 +64,6 @@ public class ScoreBoardHandler : IScoreBoardHandler
             }
             return incomingString;
     }
-
     public void UpdatePosition(PlayerDAO player, int guess)
     {
         try
@@ -78,15 +71,21 @@ public class ScoreBoardHandler : IScoreBoardHandler
             player.NumberOfGuesses += guess;
             player.GamesPlayed++;
         }
-        catch (Exception ex) { ui.Output("Could not update position. \n" + ex); }
+        catch (Exception ex) { _ui.Output("Could not update position. \n" + ex); }
     }
-
     public double CalculateAverage(PlayerDAO player)
     {
         try
         {
             return (double)player.NumberOfGuesses / player.GamesPlayed;
         }
-        catch (Exception ex) { ui.Output("Could not calculate average. \n" + ex); return 0; }
+        catch (Exception ex) { _ui.Output("Could not calculate average. \n" + ex); return 0; }
+    }
+    public void SortScoreboard(List<PlayerDAO> players)
+    {
+        //Sorterar poängtavlan baserat på resultatet av CalculateAverage
+        try
+        { players.Sort((p1, p2) => CalculateAverage(p1).CompareTo(CalculateAverage(p2))); }
+        catch (Exception ex) { _ui.Output("Could not sort. \n" + ex); }
     }
 }

@@ -6,13 +6,11 @@ public class MockFileHandler : IDataHandler
 {
     public string File { get; set; }
     public string TextSeparator { get; set; }
-
-    public MockFileHandler(string file, string separator)
+    public MockFileHandler(string file)
     {
         this.File = file;
-        this.TextSeparator = separator;
+        TextSeparator = "#&#";
     }
-
     public List<string> ReadFile()
     {
         StreamReader streamReader = new StreamReader(File);
@@ -26,7 +24,6 @@ public class MockFileHandler : IDataHandler
         streamReader.Close();
         return lines;
     }
-
     public void WriteToFile(string userName, int numberOfGuesses)
     {
         StreamWriter streamWriter = new StreamWriter(File, append: true);

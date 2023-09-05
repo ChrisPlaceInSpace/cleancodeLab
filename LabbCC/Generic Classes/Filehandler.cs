@@ -4,18 +4,15 @@ namespace LabbCC;
 
 public class Filehandler : IDataHandler
 {
-    private readonly IUI ui;
+    private readonly IUI _ui;
     public string TextSeparator { get; set; }
     public string File { get; set; }
-
-    public Filehandler(string file, string textSeparator, IUI ui)
+    public Filehandler(string file, IUI ui)
     {
         this.File = file;
-        this.TextSeparator = textSeparator;
-        this.ui = ui;
+        TextSeparator = "#&#";
+        _ui = ui;
     }
-
-
     public void WriteToFile(string userName, int numberOfGuesses)
     {
         try
@@ -28,11 +25,10 @@ public class Filehandler : IDataHandler
         }
         catch (Exception ex)
         {
-            ui.Output("Could not write to file\n" + ex);
+            _ui.Output("Could not write to file\n" + ex);
             throw;
         }
     }
-
     public List<string> ReadFile()
     {
         try
@@ -48,9 +44,6 @@ public class Filehandler : IDataHandler
             streamReader.Close();
             return lines;
         }
-        catch (Exception ex) { ui.Output("Could not read from File. \n" + ex); return null; }
+        catch (Exception ex) { _ui.Output("Could not read from File. \n" + ex); return null; }
     }
-
-    
-
 }

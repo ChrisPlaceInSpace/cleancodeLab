@@ -3,14 +3,14 @@ using System.Text;
 
 namespace LabbCCTests;
 
-internal class MockScoreBoardHandler : IScoreBoardHandler
+internal class MockScoreBoard : IScoreBoard
 {
-    private readonly IUI ui;
+    private readonly IUI _ui;
     private readonly MockFileHandler filehandler;
-    public MockScoreBoardHandler(MockFileHandler filehandler, IUI ui)
+    public MockScoreBoard(MockFileHandler filehandler, IUI ui)
     {
         this.filehandler = filehandler;
-        this.ui = ui;
+        _ui = ui;
     }
     public double CalculateAverage(PlayerDAO player)
     {
@@ -20,6 +20,14 @@ internal class MockScoreBoardHandler : IScoreBoardHandler
     public void PrintScoreBoard(List<PlayerDAO> scoreBoard)
     {
         throw new NotImplementedException();
+    }
+
+    public void SortScoreboard(List<PlayerDAO> players)
+    {
+        //Sorterar poängtavlan baserat på resultatet av CalculateAverage
+        try
+        { players.Sort((p1, p2) => CalculateAverage(p1).CompareTo(CalculateAverage(p2))); }
+        catch (Exception ex) { _ui.Output("Could not sort. \n" + ex); }
     }
 
     public string Truncate(string incomingString)
@@ -49,7 +57,7 @@ internal class MockScoreBoardHandler : IScoreBoardHandler
             string[] nameAndScore = line.Split(new string[] { filehandler.TextSeparator }, StringSplitOptions.None);
             string name = nameAndScore[0];
             int score = Convert.ToInt32(nameAndScore[1]);
-            PlayerDAO playerData = new PlayerDAO(name, score, ui);
+            PlayerDAO playerData = new PlayerDAO(name, score, _ui);
             int position = players.IndexOf(playerData);
 
             if (position < 0)
@@ -61,5 +69,6 @@ internal class MockScoreBoardHandler : IScoreBoardHandler
                 UpdatePosition(players[position], playerData.NumberOfGuesses);
             }
         }
+        SortScoreboard(players);
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace LabbCC;
 
-public interface IDataHandler   //Byta namn till DataHandler?
+public interface IDataHandler
 {
     public string File { get; set;  }
     List<string> ReadFile();

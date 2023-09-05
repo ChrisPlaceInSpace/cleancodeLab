@@ -10,17 +10,14 @@ public class MockUI : IUI
     {
         _outputCounter = 0;
     }
-
     public void Clear()
     {
         throw new NotImplementedException();
     }
-
     public void ExitGame()
     {
         throw new NotImplementedException();
     }
-
     public string Input()
     {
         _outputCounter++;
@@ -39,7 +36,6 @@ public class MockUI : IUI
         }
 
     }
-
     public void Output(string s)
     {
         Debug.WriteLine($"'MockUI outputs: {s}");

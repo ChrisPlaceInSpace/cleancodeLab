@@ -1,5 +1,4 @@
-﻿
-namespace LabbCC;
+﻿namespace LabbCC;
 
 class MainClass
 	{
@@ -9,5 +8,4 @@ class MainClass
         GameLobby gameLobby = new GameLobby(ui);
         gameLobby.GameMenu();
     }
-
 }

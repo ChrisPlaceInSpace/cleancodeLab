@@ -8,17 +8,14 @@ public class ConsoleIO : IUI
     {
         Console.Clear();
     }
-
     public void ExitGame()
     {
         Environment.Exit(0);
     }
-
     public string Input()
     {
         return Console.ReadLine();
     }
-
     public void Output(string s)
     {
         Console.WriteLine(s);
