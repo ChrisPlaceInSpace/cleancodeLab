@@ -1,17 +1,19 @@
-﻿using System.Reflection.Metadata.Ecma335;
+﻿using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 
 namespace LabbCC;
 public class GameLobby : IGameLobby
 {
     private readonly IUI _ui;
-    IGameCollection _games;
+    private readonly IGameCollection<IGame> _gameCollection;
     public GameLobby(IUI ui)
     {
         _ui = ui;
-        _games = new GameCollection(ui);
+        _gameCollection = new GameCollection<IGame>(_ui);
     }
     public void GameMenu()
     {
+        _gameCollection.AddGames();
         bool running = true;
         while (running)
         {
@@ -27,7 +29,7 @@ public class GameLobby : IGameLobby
     {
         try
         {
-            var games = _games.Collection();
+            var games = _gameCollection.Collection();
             var gameNumber = 1;
             _ui.Output("Please select game:\n");
             foreach (var game in games)
@@ -51,7 +53,7 @@ public class GameLobby : IGameLobby
     }
     public void OptionSelector(int select)
     {
-        if (select > 0 && select <= _games.Collection().Count)
+        if (select > 0 && select <= _gameCollection.Collection().Count)
         {
             SelectedGame(select);
         }
@@ -68,7 +70,7 @@ public class GameLobby : IGameLobby
     {
         try
         {
-            var games = _games.Collection();
+            var games = _gameCollection.Collection();
             IGame game = games[select - 1];
             game.RunGame();
         }
