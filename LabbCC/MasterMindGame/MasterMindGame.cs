@@ -24,7 +24,11 @@ internal class MasterMindGame : IGame
             {
                 masterMindGameLogic.PrintGameIntructions();
                 int numberOfGuesses = masterMindGameLogic.PlayLogic();
+                try
+                {
                 _filehandler.WriteToFile(userName, numberOfGuesses);
+                }
+                catch (Exception ex) { _ui.Output(ex.ToString()); }
                 scoreBoard.UpdateScoreBoard(playerStats);
                 scoreBoard.PrintScoreBoard(playerStats);
                 gameOn = masterMindGameLogic.Continue();

@@ -29,7 +29,7 @@ public class GameLobby : IGameLobby
     {
         try
         {
-            var games = _gameCollection.Collection();
+            var games = _gameCollection.GetGames();
             var gameNumber = 1;
             _ui.Output("Please select game:\n");
             foreach (var game in games)
@@ -53,7 +53,7 @@ public class GameLobby : IGameLobby
     }
     public void OptionSelector(int select)
     {
-        if (select > 0 && select <= _gameCollection.Collection().Count)
+        if (select > 0 && select <= _gameCollection.GetGames().Count)
         {
             SelectedGame(select);
         }
@@ -70,7 +70,7 @@ public class GameLobby : IGameLobby
     {
         try
         {
-            var games = _gameCollection.Collection();
+            var games = _gameCollection.GetGames();
             IGame game = games[select - 1];
             game.RunGame();
         }

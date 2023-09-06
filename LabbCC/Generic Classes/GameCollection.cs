@@ -8,7 +8,7 @@ public class GameCollection<T> : IGameCollection<IGame>
         _ui = ui;
         _games = new List<IGame>();
     }
-    public List<IGame> Collection()
+    public List<IGame> GetGames()
     {
         try
         {
@@ -24,8 +24,8 @@ public class GameCollection<T> : IGameCollection<IGame>
     {
         _games.AddRange(new List<IGame>
         {
-            new MooGame("Moo", new Filehandler("MooGameScore.txt", _ui), _ui),
-            new MasterMindGame("MasterMind", new Filehandler("MasterMindScore.txt", _ui), _ui)
+            new MooGame("Moo", new Filehandler("MooGameScore.txt"), _ui),
+            new MasterMindGame("MasterMind", new Filehandler("MasterMindScore.txt"), _ui)
         });
     }
 } 
