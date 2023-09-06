@@ -31,6 +31,7 @@ public class MooGame : IGame
                 catch (Exception ex) { _ui.Output(ex.ToString()); }
                 scoreBoard.UpdateScoreBoard(playerStats);
                 scoreBoard.PrintScoreBoard(playerStats);
+                playerStats.Clear();
                 gameOn = mooGameLogic.Continue();
             }
         }

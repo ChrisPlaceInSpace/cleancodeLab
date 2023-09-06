@@ -22,7 +22,7 @@ public class ScoreBoard : IScoreBoard
                 string[] nameAndScore = line.Split(new string[] { _filehandler.TextSeparator }, StringSplitOptions.None);
                 string name = nameAndScore[0];
                 int score = Convert.ToInt32(nameAndScore[1]);
-                PlayerDAO playerData = new PlayerDAO(name, score, _ui);
+                PlayerDAO playerData = new PlayerDAO(name, score);
                 int position = players.IndexOf(playerData);
 
                 if (position < 0)

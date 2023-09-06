@@ -40,7 +40,7 @@ public class ScoreBoardHandlerTests
     [TestMethod()]
     public void UpdatePositionTest()
     {
-        PlayerDAO player = new PlayerDAO("JohnDoe", 1, ui);
+        PlayerDAO player = new PlayerDAO("JohnDoe", 1);
         int guess = 1;
         mockScoreBoard.UpdatePosition(player, guess);
         int guessesExpected = 2, gamesPlayedExpected = 2;
@@ -49,7 +49,7 @@ public class ScoreBoardHandlerTests
     [TestMethod()]
     public void CalculateAverageTest()
     {
-        PlayerDAO player = new PlayerDAO("Jens", 5, ui);
+        PlayerDAO player = new PlayerDAO("Jens", 5);
         Assert.AreEqual(5, mockScoreBoard.CalculateAverage(player));
     }
     

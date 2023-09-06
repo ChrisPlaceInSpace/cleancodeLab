@@ -10,7 +10,7 @@ internal class MockScoreBoard : IScoreBoard
     public MockScoreBoard(MockFileHandler filehandler, IUI ui)
     {
         this.filehandler = filehandler;
-        _ui = ui;
+        this._ui = ui;
     }
     public double CalculateAverage(PlayerDAO player)
     {
@@ -57,7 +57,7 @@ internal class MockScoreBoard : IScoreBoard
             string[] nameAndScore = line.Split(new string[] { filehandler.TextSeparator }, StringSplitOptions.None);
             string name = nameAndScore[0];
             int score = Convert.ToInt32(nameAndScore[1]);
-            PlayerDAO playerData = new PlayerDAO(name, score, _ui);
+            PlayerDAO playerData = new PlayerDAO(name, score);
             int position = players.IndexOf(playerData);
 
             if (position < 0)
