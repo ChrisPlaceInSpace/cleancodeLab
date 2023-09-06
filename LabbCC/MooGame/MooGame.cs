@@ -24,7 +24,11 @@ public class MooGame : IGame
             {
                 mooGameLogic.PrintGameIntructions();
                 int numberOfGuesses = mooGameLogic.PlayLogic();
+                try
+                {
                 _filehandler.WriteToFile(userName, numberOfGuesses);
+                }
+                catch (Exception ex) { _ui.Output(ex.ToString()); }
                 scoreBoard.UpdateScoreBoard(playerStats);
                 scoreBoard.PrintScoreBoard(playerStats);
                 gameOn = mooGameLogic.Continue();
