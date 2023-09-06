@@ -1,7 +1,8 @@
 ﻿namespace LabbCC
 {
-    public interface IGameCollection
+    public interface IGameCollection<IGame>
     {
+        void AddGames();
         List<IGame> Collection();
     }
 }

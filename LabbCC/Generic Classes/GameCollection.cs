@@ -1,21 +1,18 @@
 ﻿namespace LabbCC;
-public class GameCollection : IGameCollection
+public class GameCollection<T> : IGameCollection<IGame>
 {
     private readonly IUI _ui;
+    private readonly List<IGame> _games;
     public GameCollection(IUI ui)
     {
         _ui = ui;
+        _games = new List<IGame>();
     }
     public List<IGame> Collection()
     {
         try
         {
-            List<IGame> games = new List<IGame>
-            {
-                new MooGame("Moo", new Filehandler("MooGameScore.txt", _ui), _ui),
-                new MasterMindGame("MasterMind", new Filehandler("MasterMindScore.txt", _ui), _ui)
-            };
-            return games;
+            return _games.Cast<IGame>().ToList();
         }
         catch (Exception ex)
         {
@@ -23,4 +20,12 @@ public class GameCollection : IGameCollection
             return null;
         }
     }
-}
+    public void AddGames()
+    {
+        _games.AddRange(new List<IGame>
+        {
+            new MooGame("Moo", new Filehandler("MooGameScore.txt", _ui), _ui),
+            new MasterMindGame("MasterMind", new Filehandler("MasterMindScore.txt", _ui), _ui)
+        });
+    }
+} 
